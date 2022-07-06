@@ -31,25 +31,25 @@ const ProfileHeader = ({ data }) => {
               <Nav className='mb-0' pills>
                 <NavItem>
                   <NavLink className='font-weight-bold' active>
-                    <span className='d-none d-md-block'>Feed</span>
+                    <span className='d-none d-md-block'>Account</span>
                     <Rss className='d-block d-md-none' size={14} />
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className='font-weight-bold'>
-                    <span className='d-none d-md-block'>About</span>
+                    <span className='d-none d-md-block'>Business</span>
                     <Info className='d-block d-md-none' size={14} />
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className='font-weight-bold'>
-                    <span className='d-none d-md-block'>Photos</span>
+                    <span className='d-none d-md-block'>Settings</span>
                     <Image className='d-block d-md-none' size={14} />
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className='font-weight-bold'>
-                    <span className='d-none d-md-block'>Friends</span>
+                    <span className='d-none d-md-block'>Payouts</span>
                     <Users className='d-block d-md-none' size={14} />
                   </NavLink>
                 </NavItem>

@@ -47,7 +47,7 @@ const UserDropdown = () => {
           <span className='user-name font-weight-bold'>{(userData && userData['firstname'])}</span>
           <span className='user-status'>{(userData && userData.role)}</span>
         </div>
-        <Avatar img={userAvatar} imgHeight='40' imgWidth='40' status={socket.connected ? 'online' : 'offline'} />
+        {/* <Avatar img={userAvatar} imgHeight='40' imgWidth='40' status={socket.connected ? 'online' : 'offline'} /> */}
       </DropdownToggle>
       <DropdownMenu right>
         {/* {(!socket.connected) && <DropdownItem tag={Link} to="" onClick={(e) => {

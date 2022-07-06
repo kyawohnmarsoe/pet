@@ -1,71 +1,75 @@
 import { Fragment, useState, useEffect } from 'react'
+import Tabs from './Tabs'
 import axios from 'axios'
-import UILoader from '@components/ui-loader'
-import ProfilePoll from './ProfilePolls'
-import ProfileAbout from './ProfileAbout'
-import ProfilePosts from './ProfilePosts'
-import ProfileHeader from './ProfileHeader'
-import { Row, Col, Button } from 'reactstrap'
-import ProfileTwitterFeeds from './ProfileTwitterFeeds'
-import ProfileLatestPhotos from './ProfileLatestPhotos'
-import ProfileSuggestedPages from './ProfileSuggestedPages'
-import ProfileFriendsSuggestions from './ProfileFriendsSuggestions'
+import SettingsTabContent from './SettingsTabContent'
 import Breadcrumbs from '@components/breadcrumbs'
+import PayoutsTabContent from './PayoutsTabContent'
+import AccountTabContent from './AccountTabContent'
+import BusinessTabContent from './BusinessTabContent'
+import NotificationsTabContent from './NotificationsTabContent'
+import { Row, Col, TabContent, TabPane, Card, CardBody } from 'reactstrap'
+import UILoader from '@components/ui-loader'
 
-import '@styles/react/pages/page-profile.scss'
+import '@styles/react/libs/flatpickr/flatpickr.scss'
+import '@styles/react/pages/page-account-settings.scss'
+import { endPints } from '../../../configs/endPoints'
+import ErrorBoundary from '../misc/ErrorBoundary'
 
 const Profile = () => {
-  const [data, setData] = useState(null)
-  const [block, setBlock] = useState(false)
+  const [activeTab, setActiveTab] = useState('1'),
+    [data, setData] = useState(null)
 
-  const handleBlock = () => {
-    setBlock(true)
-    setTimeout(() => {
-      setBlock(false)
-    }, 2000)
+  const toggleTab = tab => {
+    setActiveTab(tab)
   }
 
   useEffect(() => {
-    axios.get('/profile/data').then(response => setData(response.data))
+    axios.get(`${endPints.baseUrl}/user`).then(response => setData(response.data.data))
   }, [])
+
   return (
     <Fragment>
-      <Breadcrumbs breadCrumbTitle='Profile' breadCrumbParent='Pages' breadCrumbActive='Profile' />
-      {data !== null ? (
-        <div id='user-profile'>
-          <Row>
-            <Col sm='12'>
-              <ProfileHeader data={data.header} />
-            </Col>
-          </Row>
-          <section id='profile-info'>
+      <Breadcrumbs breadCrumbTitle='Profile' breadCrumbActive='Profile' />
+      <UILoader blocking={data === null}>
+        {data !== null ? (
+          <Fragment>
             <Row>
-              <Col lg={{ size: 3, order: 1 }} sm={{ size: 12 }} xs={{ order: 2 }}>
-                <ProfileAbout data={data.userAbout} />
-                <ProfileSuggestedPages data={data.suggestedPages} />
-                <ProfileTwitterFeeds data={data.twitterFeeds} />
-              </Col>
-              <Col lg={{ size: 6, order: 2 }} sm={{ size: 12 }} xs={{ order: 1 }}>
-                <ProfilePosts data={data.post} />
-              </Col>
-              <Col lg={{ size: 3, order: 3 }} sm={{ size: 12 }} xs={{ order: 3 }}>
-                <ProfileLatestPhotos data={data.latestPhotos} />
-                <ProfileFriendsSuggestions data={data.suggestions} />
-                <ProfilePoll data={data.polls} />
+              <Col className='mb-2 mb-md-0' md='12'>
+                <Tabs activeTab={activeTab} toggleTab={toggleTab} />
               </Col>
             </Row>
             <Row>
-              <Col className='text-center' sm='12'>
-                <Button color='primary' className='border-0 mb-1 profile-load-more' size='sm' onClick={handleBlock}>
-                  <UILoader blocking={block} overlayColor='rgba(255,255,255, .5)'>
-                    <span> Load More</span>
-                  </UILoader>
-                </Button>
+              <Col md='12'>
+                <Card>
+                  <CardBody>
+                    <TabContent activeTab={activeTab}>
+                      <TabPane tabId='1'>
+                        <AccountTabContent data={data} />
+                      </TabPane>
+                      <TabPane tabId='2'>
+                        <BusinessTabContent />
+                      </TabPane>
+                      <TabPane tabId='3'>
+                        <ErrorBoundary>
+                          <SettingsTabContent data={data} />
+                        </ErrorBoundary>
+                      </TabPane>
+                      <TabPane tabId='4'>
+                        <ErrorBoundary>
+                          <PayoutsTabContent data={data} />
+                        </ErrorBoundary>
+                      </TabPane>
+                      <TabPane tabId='5'>
+                        {/* <NotificationsTabContent data={data} /> */}
+                      </TabPane>
+                    </TabContent>
+                  </CardBody>
+                </Card>
               </Col>
             </Row>
-          </section>
-        </div>
-      ) : null}
+          </Fragment>
+        ) : null}
+      </UILoader>
     </Fragment>
   )
 }

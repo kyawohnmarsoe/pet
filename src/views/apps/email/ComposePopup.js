@@ -126,7 +126,7 @@ const ComposePopup = props => {
                 isClearable={false}
                 theme={selectThemeColors}
                 options={selectOptions}
-                className='react-select select-borderless'
+                className=' select-borderless'
                 classNamePrefix='select'
                 components={{ Option: SelectComponent }}
               />
@@ -152,7 +152,7 @@ const ComposePopup = props => {
                   isClearable={false}
                   theme={selectThemeColors}
                   options={selectOptions}
-                  className='react-select select-borderless'
+                  className=' select-borderless'
                   classNamePrefix='select'
                   components={{ Option: SelectComponent }}
                 />

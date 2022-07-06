@@ -18,6 +18,7 @@ import CardCongratulations from '@src/views/ui-elements/cards/advance/CardCongra
 import SubscribersGained from '@src/views/ui-elements/cards/statistics/SubscribersGained'
 
 import '@styles/react/libs/charts/apex-charts.scss'
+import ErrorBoundary from '../../pages/misc/ErrorBoundary'
 
 const AnalyticsDashboard = () => {
   const { colors } = useContext(ThemeColors)
@@ -151,7 +152,9 @@ const AnalyticsDashboard = () => {
       </Row>
       <Row className='match-height'>
         <Col xs='12'>
+          <ErrorBoundary>
           <InvoiceList />
+          </ErrorBoundary>
         </Col>
       </Row>
     </div>

@@ -3,6 +3,7 @@ import { Fragment, useState, useEffect } from 'react'
 
 // ** Invoice List Sidebar
 import Sidebar from './Sidebar'
+import Breadcrumbs from '@components/breadcrumbs'
 
 // ** Columns
 import { columns } from './columns'
@@ -67,7 +68,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
             />
           </div>
           <Button.Ripple color='primary' onClick={toggleSidebar}>
-            Add New User
+            Add New Clinic
           </Button.Ripple>
         </Col>
       </Row>
@@ -75,10 +76,10 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
   )
 }
 
-const UsersList = () => {
+const ClinicsList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.users)
+  const store = useSelector(state => state.clinics)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
@@ -94,44 +95,16 @@ const UsersList = () => {
 
   // ** Get data on mount
   useEffect(() => {
+
     dispatch(getAllData())
     dispatch(
       getData({
         page: currentPage,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
         q: searchTerm
       })
     )
   }, [dispatch, store.data.length])
-
-
-  // ** User filter options
-  const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
-  ]
-
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
-  ]
-
-  const statusOptions = [
-    { value: '', label: 'Select Status', number: 0 },
-    { value: 'pending', label: 'Pending', number: 1 },
-    { value: 'active', label: 'Active', number: 2 },
-    { value: 'inactive', label: 'Inactive', number: 3 }
-  ]
 
   // ** Function in get data on page change
   const handlePagination = page => {
@@ -139,9 +112,6 @@ const UsersList = () => {
       getData({
         page: page.selected + 1,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -155,9 +125,6 @@ const UsersList = () => {
       getData({
         page: currentPage,
         perPage: value,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -171,9 +138,6 @@ const UsersList = () => {
       getData({
         page: currentPage,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
         q: val
       })
     )
@@ -205,15 +169,13 @@ const UsersList = () => {
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
-      role: currentRole.value,
-      currentPlan: currentPlan.value,
-      status: currentStatus.value,
       q: searchTerm
     }
 
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })
+
 
     if (store.data.length > 0) {
       return store.data
@@ -222,90 +184,15 @@ const UsersList = () => {
     } else {
       return store.allData.slice(0, rowsPerPage)
     }
+
   }
 
   return (
     <Fragment>
-      <Card>
-        <CardHeader>
-          <CardTitle tag='h4'>Search Filter</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <Row>
-            <Col md='4'>
-              <Select
-                isClearable={false}
-                theme={selectThemeColors}
-                className='react-select'
-                classNamePrefix='select'
-                options={roleOptions}
-                value={currentRole}
-                onChange={data => {
-                  setCurrentRole(data)
-                  dispatch(
-                    getData({
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: data.value,
-                      currentPlan: currentPlan.value,
-                      status: currentStatus.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
-            </Col>
-            <Col className='my-md-0 my-1' md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={planOptions}
-                value={currentPlan}
-                onChange={data => {
-                  setCurrentPlan(data)
-                  dispatch(
-                    getData({
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
-            </Col>
-            <Col md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getData({
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value,
-                      status: data.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
-            </Col>
-          </Row>
-        </CardBody>
-      </Card>
 
+      <Breadcrumbs breadCrumbTitle='Clinics' breadCrumbActive='Clinics' />
       <Card>
+
         <DataTable
           noHeader
           pagination
@@ -329,9 +216,9 @@ const UsersList = () => {
         />
       </Card>
 
-      <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} />
+      {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
     </Fragment>
   )
 }
 
-export default UsersList
+export default ClinicsList

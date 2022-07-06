@@ -14,6 +14,7 @@ import NavbarBookmarks from './NavbarBookmarks'
 // ** Third Party Components
 import { Sun, Moon } from 'react-feather'
 import { NavItem, NavLink } from 'reactstrap'
+import ErrorBoundary from '../../../../views/pages/misc/ErrorBoundary'
 // import { Socket } from '../../../../utility/context/socket'
 
 const ThemeNavbar = props => {
@@ -53,7 +54,9 @@ const ThemeNavbar = props => {
         {/* <NavbarSearch /> */}
         {/* <CartDropdown /> */}
         <NotificationDropdown />
-        <UserDropdown />
+        {/* <ErrorBoundary> */}
+        {/* <UserDropdown /> */}
+        {/* </ErrorBoundary> */}
       </ul>
     </Fragment>
   )
