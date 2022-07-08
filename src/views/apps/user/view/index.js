@@ -50,7 +50,7 @@ const UserView = props => {
       </Row>
       <Row>
         <Col sm='12'>
-          <InvoiceList />
+          {/* <InvoiceList /> */}
         </Col>
       </Row>
     </div>

@@ -8,11 +8,11 @@ import Avatar from '@components/avatar'
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 
-const UserInfoCard = ({ selectedUser }) => {
+const ClinicInfoCard = ({ selectedClinic }) => {
   // ** render user img
   const renderUserImg = () => {
-    if (selectedUser !== null && selectedUser.avatar.length) {
-      return <img src={selectedUser.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
+    if (selectedClinic !== null && selectedClinic.avatar.length) {
+      return <img src={selectedClinic.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
     } else {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
@@ -22,7 +22,7 @@ const UserInfoCard = ({ selectedUser }) => {
           initials
           color={color}
           className='rounded'
-          content={selectedUser.fullName}
+          content={selectedClinic.clinicName}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -48,13 +48,13 @@ const UserInfoCard = ({ selectedUser }) => {
                 {renderUserImg()}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mb-1'>
-                    <h4 className='mb-0'>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>
+                    <h4 className='mb-0'>{selectedClinic !== null ? selectedClinic.fullName : 'Eleanor Aguilar'}</h4>
                     <CardText tag='span'>
-                      {selectedUser !== null ? selectedUser.email : 'eleanor.aguilar@gmail.com'}
+                      {selectedClinic !== null ? selectedClinic.email : 'eleanor.aguilar@gmail.com'}
                     </CardText>
                   </div>
                   <div className='d-flex flex-wrap align-items-center'>
-                    <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedUser.id}`} color='primary'>
+                    <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedClinic.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
                     <Button.Ripple className='ml-1' color='danger' outline>
@@ -95,7 +95,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
-                  {selectedUser !== null ? selectedUser.username : 'eleanor.aguilar'}
+                  {selectedClinic !== null ? selectedClinic.clinicName : 'eleanor.aguilar'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -106,7 +106,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedUser !== null ? selectedUser.status : 'Active'}
+                  {selectedClinic !== null ? selectedClinic.clinicName : 'Active'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -117,7 +117,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedUser !== null ? selectedUser.role : 'Admin'}
+                  {selectedClinic !== null ? selectedClinic.clinicName : 'Admin'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -127,7 +127,7 @@ const UserInfoCard = ({ selectedUser }) => {
                     Country
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedUser !== null ? selectedUser.country : 'England'}</CardText>
+                <CardText className='mb-0'>{selectedClinic !== null ? selectedClinic.clinicName : 'England'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
@@ -136,7 +136,7 @@ const UserInfoCard = ({ selectedUser }) => {
                     Contact
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedUser !== null ? selectedUser.contact : '(123) 456-7890'}</CardText>
+                <CardText className='mb-0'>{selectedClinic !== null ? selectedClinic.clinicName : '(123) 456-7890'}</CardText>
               </div>
             </div>
           </Col>
@@ -146,4 +146,4 @@ const UserInfoCard = ({ selectedUser }) => {
   )
 }
 
-export default UserInfoCard
+export default ClinicInfoCard

@@ -17,6 +17,8 @@ import { Card, CardBody, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, A
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
+import '@styles/react/libs/react-select/_react-select.scss'
+
 
 const ClinicEdit = () => {
   // ** States & Vars
@@ -36,6 +38,7 @@ const ClinicEdit = () => {
 
   return store.selectedClinic !== null && store.selectedClinic !== undefined ? (
     <Row className='app-user-edit'>
+
       <Col sm='12'>
         <Card>
           <CardBody className='pt-2'>

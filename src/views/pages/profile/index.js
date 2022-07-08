@@ -24,7 +24,11 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    axios.get(`${endPints.baseUrl}/user`).then(response => setData(response.data.data))
+    // axios.get(`${endPints.baseUrl}/user`).then(response => setData(response.data.data) )
+    axios.get(`${endPints.baseUrl}/user`).
+      then(response => setData(response.data.data))
+    // then(response => setData(response.data.data))
+
   }, [])
 
   return (

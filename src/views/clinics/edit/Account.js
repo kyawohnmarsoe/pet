@@ -3,15 +3,18 @@ import { useState, useEffect } from 'react'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
+import Select from 'react-select'
+
 
 // ** Third Party Components
 import { Lock, Edit, Trash2 } from 'react-feather'
-import { Media, Row, Col, Button, Form, Input, Label, FormGroup, Table, CustomInput } from 'reactstrap'
+import { Media, Row, Col, Button, Form, Input, Label, FormGroup, Table, CustomInput, Card, CardHeader, CardTitle, CardBody } from 'reactstrap'
 
-const UserAccountTab = ({ selectedUser }) => {
+
+const ClinicAccountTab = ({ selectedClinic }) => {
   // ** States
   const [img, setImg] = useState(null)
-  const [userData, setUserData] = useState(null)
+  const [clinicData, setClinicData] = useState(null)
 
   // ** Function to change user image
   const onChange = e => {
@@ -25,16 +28,26 @@ const UserAccountTab = ({ selectedUser }) => {
 
   // ** Update user image on mount or change
   useEffect(() => {
-    if (selectedUser !== null || (selectedUser !== null && userData !== null && selectedUser.id !== userData.id)) {
-      setUserData(selectedUser)
-      if (selectedUser.avatar.length) {
-        return setImg(selectedUser.avatar)
+    if (selectedClinic !== null || (selectedClinic !== null && clinicData !== null && selectedClinic.id !== clinicData.id)) {
+      setClinicData(selectedClinic)
+      if (selectedClinic.avatar.length) {
+        return setImg(selectedClinic.avatar)
       } else {
         return setImg(null)
       }
     }
-  }, [selectedUser])
+  }, [selectedClinic])
 
+  const options = [
+    { value: '1', label: 'General Consultation' },
+    { value: '2', label: 'Vaccination' },
+    { value: '3', label: 'Internal Medicine' }
+  ]
+  const workdaysOptions = [
+    { value: '1', label: 'Saturday' },
+    { value: '2', label: 'Tuesday' },
+    { value: '3', label: 'Thursday' }
+  ]
   // ** Renders User
   const renderUserAvatar = () => {
     if (img === null) {
@@ -46,7 +59,7 @@ const UserAccountTab = ({ selectedUser }) => {
           initials
           color={color}
           className='rounded mr-2 my-25'
-          content={selectedUser.fullName}
+          content={selectedClinic.clinicName}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -72,16 +85,17 @@ const UserAccountTab = ({ selectedUser }) => {
     }
   }
 
-  if (userData === null || userData === undefined) {
+  if (clinicData === null || clinicData === undefined) {
     return null
   } else {
     return (
       <Row>
+
         <Col sm='12'>
           <Media className='mb-2'>
             {renderUserAvatar()}
             <Media className='mt-50' body>
-              <h4>{selectedUser.fullName} </h4>
+              <h4>{selectedClinic.clinicName} </h4>
               <div className='d-flex flex-wrap mt-1 px-0'>
                 <Button.Ripple id='change-img' tag={Label} className='mr-75 mb-0' color='primary'>
                   <span className='d-none d-sm-block'>Change</span>
@@ -105,26 +119,57 @@ const UserAccountTab = ({ selectedUser }) => {
             <Row>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='username'>Username</Label>
-                  <Input type='text' id='username' placeholder='Username' defaultValue={userData.username} />
+                  <Label for='username'><span className='text-danger'>*</span>Branch Name</Label>
+                  <Input type='text' id='username' placeholder='Username' defaultValue={clinicData.clinicName} disabled />
+                </FormGroup>
+              </Col>
+
+              <Col md='4' sm='12' className="petzola">
+                <FormGroup>
+                  <Label for='username'><span className='text-danger'>*</span>Status</Label>
+                  <div className='demo-inline-spacing'>
+                    <CustomInput type='radio' label='Open' name='status' id='open' />
+                    <CustomInput type='radio' label='Close' name='status' id='close' />
+                  </div>
+                </FormGroup>
+              </Col>
+
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='name'><span className='text-danger'>*</span>Service Location</Label>
+                  <Input type='text' id='name' placeholder='Name' defaultValue={clinicData.clinicName} />
                 </FormGroup>
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='name'>Name</Label>
-                  <Input type='text' id='name' placeholder='Name' defaultValue={userData.fullName} />
+                  <Label for='email'><span className='text-danger'>*</span>Service Category</Label>
+                  {/* <Input type='text' id='email' placeholder='Email' defaultValue={clinicData.clinicName} /> */}
+
+                  <Select
+                    closeMenuOnSelect={false}
+                    defaultValue={[options[4], options[5]]}
+                    isMulti
+                    options={options}
+                  />
+
                 </FormGroup>
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='email'>Email</Label>
-                  <Input type='text' id='email' placeholder='Email' defaultValue={userData.email} />
+                  <Label for='email'><span className='text-danger'>*</span>X Coordinate</Label>
+                  <Input type='text' id='email' placeholder='Email' defaultValue={clinicData.clinicName} />
                 </FormGroup>
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='status'>Status</Label>
-                  <Input type='select' name='status' id='status' defaultValue={userData.status}>
+                  <Label for='email'><span className='text-danger'>*</span>Y Coordinate</Label>
+                  <Input type='text' id='email' placeholder='Email' defaultValue={clinicData.clinicName} />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='status'><span className='text-danger'>*</span>Country</Label>
+                  <Input type='select' name='status' id='status' defaultValue={clinicData.clinicName}>
                     <option value='pending'>Pending</option>
                     <option value='active'>Active</option>
                     <option value='inactive'>Inactive</option>
@@ -133,8 +178,8 @@ const UserAccountTab = ({ selectedUser }) => {
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='role'>Role</Label>
-                  <Input type='select' name='role' id='role' defaultValue={userData.role}>
+                  <Label for='role'><span className='text-danger'>*</span>City</Label>
+                  <Input type='select' name='role' id='role' defaultValue={clinicData.clinicName}>
                     <option value='admin'>Admin</option>
                     <option value='author'>Author</option>
                     <option value='editor'>Editor</option>
@@ -145,111 +190,75 @@ const UserAccountTab = ({ selectedUser }) => {
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='company'>Company</Label>
+                  <Label for='company'><span className='text-danger'>*</span>Landmark</Label>
                   <Input
                     type='text'
                     id='company'
-                    defaultValue={userData.company}
+                    defaultValue={clinicData.clinicName}
+                    placeholder='WinDon Technologies Pvt Ltd'
+                    disabled
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='company'><span className='text-danger'>*</span>Landmark</Label>
+                  <Input
+                    type='text'
+                    id='company'
+                    defaultValue={clinicData.clinicName}
+                    placeholder='WinDon Technologies Pvt Ltd'
+                    disabled
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='company'><span className='text-danger'>*</span>Street</Label>
+                  <Input
+                    type='text'
+                    id='company'
+                    defaultValue={clinicData.clinicName}
+                    placeholder='WinDon Technologies Pvt Ltd'
+                    disabled
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='company'><span className='text-danger'>*</span>Branch Tel Number</Label>
+                  <Input
+                    type='text'
+                    id='company'
+                    defaultValue={clinicData.clinicName}
+                    placeholder='WinDon Technologies Pvt Ltd'
+                    disabled
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='company'><span className='text-danger'>*</span>Branch Workdays</Label>
+                  <Select
+                    closeMenuOnSelect={false}
+                    defaultValue={[workdaysOptions[4], workdaysOptions[5]]}
+                    isMulti
+                    options={workdaysOptions}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='company'>About Branch</Label>
+                  <Input
+                    type='text'
+                    id='company'
+                    defaultValue={clinicData.clinicName}
                     placeholder='WinDon Technologies Pvt Ltd'
                   />
                 </FormGroup>
               </Col>
-              <Col sm='12'>
-                <div className='permissions border mt-1'>
-                  <h6 className='py-1 mx-1 mb-0 font-medium-2'>
-                    <Lock size={18} className='mr-25' />
-                    <span className='align-middle'>Permissions</span>
-                  </h6>
-                  <Table borderless striped responsive>
-                    <thead className='thead-light'>
-                      <tr>
-                        <th>Module</th>
-                        <th>Read</th>
-                        <th>Write</th>
-                        <th>Create</th>
-                        <th>Delete</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Admin</td>
-                        <td>
-                          <CustomInput type='checkbox' id='admin-1' label='' defaultChecked />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='admin-2' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='admin-3' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='admin-4' label='' />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Staff</td>
-                        <td>
-                          <CustomInput type='checkbox' id='staff-1' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='staff-2' label='' defaultChecked />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='staff-3' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='staff-4' label='' />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Author</td>
-                        <td>
-                          <CustomInput type='checkbox' id='author-1' label='' defaultChecked />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='author-2' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='author-3' label='' defaultChecked />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='author-4' label='' />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Contributor</td>
-                        <td>
-                          <CustomInput type='checkbox' id='contributor-1' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='contributor-2' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='contributor-3' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='contributor-4' label='' />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>User</td>
-                        <td>
-                          <CustomInput type='checkbox' id='user-1' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='user-2' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='user-3' label='' />
-                        </td>
-                        <td>
-                          <CustomInput type='checkbox' id='user-4' label='' defaultChecked />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </div>
-              </Col>
+
               <Col className='d-flex flex-sm-row flex-column mt-2' sm='12'>
                 <Button.Ripple className='mb-1 mb-sm-0 mr-0 mr-sm-1' type='submit' color='primary'>
                   Save Changes
@@ -265,4 +274,4 @@ const UserAccountTab = ({ selectedUser }) => {
     )
   }
 }
-export default UserAccountTab
+export default ClinicAccountTab

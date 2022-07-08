@@ -14,7 +14,7 @@ export default [
     id: 'clinics',
     title: 'Clinics',
     icon: <Grid size={20} />,
-    navLink: '/clinics'
+    navLink: '/clinic/list'
   },
   {
     id: 'chat',

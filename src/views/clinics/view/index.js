@@ -37,7 +37,7 @@ const ClinicView = props => {
           <UserInfoCard selectedClinic={store.selectedClinic} />
         </Col>
         <Col xl='3' lg='4' md='5'>
-          <PlanCard selectedClinic={store.selectedClinic} />
+          {/* <PlanCard selectedClinic={store.selectedClinic} /> */}
         </Col>
       </Row>
       <Row>

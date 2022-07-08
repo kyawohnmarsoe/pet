@@ -31,7 +31,7 @@ export const columns = [
     minWidth: '300px',
     selector: 'address',
     sortable: true,
-    cell: row => row.clinicName
+    cell: row => row.address.city
   },
   {
     name: 'Phone',
@@ -63,7 +63,7 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/apps/clinic/view/${row.id}`}
+            to={`/clinic/view/${row.id}`}
             className='w-100'
             onClick={() => store.dispatch(getClinic(row.id))}
           >
@@ -72,7 +72,7 @@ export const columns = [
           </DropdownItem>
           <DropdownItem
             tag={Link}
-            to={`/apps/clinic/edit/${row.id}`}
+            to={`/clinic/edit/${row.id}`}
             className='w-100'
             onClick={() => store.dispatch(getClinic(row.id))}
           >

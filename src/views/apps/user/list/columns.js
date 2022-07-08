@@ -20,8 +20,10 @@ const renderClient = row => {
 
   if (row.avatar.length) {
     return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
+    // return "avatar"
   } else {
     return <Avatar color={color || 'primary'} className='mr-1' content={row.fullName || 'John Doe'} initials />
+    // return "avatar"
   }
 }
 

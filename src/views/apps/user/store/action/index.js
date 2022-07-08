@@ -8,7 +8,7 @@ export const getAllData = () => {
         type: 'GET_ALL_DATA',
         data: response.data
       })
-      console.log(response.data)
+
     })
   }
 }

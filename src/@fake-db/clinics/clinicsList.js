@@ -11,7 +11,8 @@ const data = {
                 city: "dubai"
             },
             phone: "123342",
-            status: "Active"
+            status: "Active",
+            avatar: ''
         },
         {
             id: 36,
@@ -21,16 +22,14 @@ const data = {
                 city: "dubai"
             },
             phone: "123333342",
-            status: "Active"
+            status: "Active",
+            avatar: ''
         }
     ]
 }
 
 // GET ALL DATA
 mock.onGet('/api/clinics/list/all-data').reply(200, data.clinics)
-// mock.onGet('/api/clinics/list/all-data').reply(config => {
-//     return [200, data]
-// })
 
 
 // POST: Add new clinic

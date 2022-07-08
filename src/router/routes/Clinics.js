@@ -3,31 +3,31 @@ import { Redirect } from 'react-router-dom'
 
 const ClinicsRoutes = [
   {
-    path: '/clinics',
+    path: '/clinic/list',
     component: lazy(() => import('../../views/clinics/list'))
   },
   {
-    path: '/clinics/edit',
+    path: '/clinic/edit',
     exact: true,
-    component: () => <Redirect to='/clinics/edit/1' />
+    component: () => <Redirect to='/clinic/edit/1' />
   },
   {
-    path: '/clinics/edit/:id',
+    path: '/clinic/edit/:id',
     component: lazy(() => import('../../views/clinics/edit')),
     meta: {
-      navLink: '/clinics/edit'
+      navLink: '/clinic/edit'
     }
   },
   {
-    path: '/clinics/view',
+    path: '/clinic/view',
     exact: true,
-    component: () => <Redirect to='/clinics/view/1' />
+    component: () => <Redirect to='/clinic/view/1' />
   },
   {
-    path: '/clinics/view/:id',
+    path: '/clinic/view/:id',
     component: lazy(() => import('../../views/clinics/view')),
     meta: {
-      navLink: '/clinics/view'
+      navLink: '/clinic/view'
     }
   }
 
