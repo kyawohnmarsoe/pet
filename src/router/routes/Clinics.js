@@ -29,6 +29,13 @@ const ClinicsRoutes = [
     meta: {
       navLink: '/clinic/view'
     }
+  },
+  {
+    path: '/clinic/workdays/edit/:id',
+    component: lazy(() => import('../../views/clinics/list')),
+    meta: {
+      navLink: '/clinic/workdays/edit'
+    }
   }
 
 ]

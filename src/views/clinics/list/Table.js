@@ -23,9 +23,10 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import WorkingDays from './WorkingDays'
 
 // ** Table Header
-const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({ toggleWorkingDays, toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -70,6 +71,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
           <Button.Ripple color='primary' onClick={toggleSidebar}>
             Add New Clinic
           </Button.Ripple>
+
         </Col>
       </Row>
     </div>
@@ -86,12 +88,14 @@ const ClinicsList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [workingDaysOpen, setWorkingDaysOpen] = useState(false)
   const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
+  const toggleWorkingDays = () => setWorkingDaysOpen(!workingDaysOpen)
 
   // ** Get data on mount
   useEffect(() => {
@@ -206,6 +210,8 @@ const ClinicsList = () => {
           data={dataToRender()}
           subHeaderComponent={
             <CustomHeader
+
+              toggleWorkingDays={toggleWorkingDays}
               toggleSidebar={toggleSidebar}
               handlePerPage={handlePerPage}
               rowsPerPage={rowsPerPage}
@@ -217,6 +223,8 @@ const ClinicsList = () => {
       </Card>
 
       {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
+      {/* <WorkingDays open={workingDaysOpen} toggleWorkingDays={toggleWorkingDays} /> */}
+
     </Fragment>
   )
 }
