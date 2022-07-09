@@ -28,6 +28,9 @@ const ClinicAccountTab = ({ selectedClinic }) => {
     }
     reader.readAsDataURL(files[0])
   }
+  const imgRemove = e => {
+    setImg(null)
+  }
 
   // ** Update user image on mount or change
   useEffect(() => {
@@ -112,7 +115,7 @@ const ClinicAccountTab = ({ selectedClinic }) => {
                   </span>
                   <input type='file' hidden id='change-img' onChange={onChange} accept='image/*' />
                 </Button.Ripple>
-                <Button.Ripple color='secondary' outline>
+                <Button.Ripple color='secondary' outline onClick={imgRemove}>
                   <span className='d-none d-sm-block'>Remove</span>
                   <span className='d-block d-sm-none'>
                     <Trash2 size={14} />

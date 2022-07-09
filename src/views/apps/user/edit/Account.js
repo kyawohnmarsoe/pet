@@ -125,7 +125,7 @@ const UserAccountTab = ({ selectedUser }) => {
                 <FormGroup>
                   <Label for='status'>Status</Label>
                   <Input type='select' name='status' id='status' defaultValue={userData.status}>
-                    <option value='pending'>Pending</option>
+
                     <option value='active'>Active</option>
                     <option value='inactive'>Inactive</option>
                   </Input>

@@ -5,47 +5,19 @@ import Select, { components } from 'react-select'
 import { selectThemeColors } from '@utils'
 import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form, CustomInput } from 'reactstrap'
 import Flatpickr from 'react-flatpickr'
+import { User, MapPin } from 'react-feather'
+import Cleave from 'cleave.js/react'
+import 'cleave.js/dist/addons/cleave-phone.us'
 
-
-// ** Default Avatar Image
-import defaultAvatar from '@src/assets/images/avatars/avatar-blank.png'
-
-
-const SettingsTabContent = ({ data }) => {
+const SettingsTabContent = ({ data, setData }) => {
 
   const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm()
-
-  const [avatar, setAvatar] = useState(data?.img ? data?.img : defaultAvatar)
-
-  const onChange = e => {
-    const reader = new FileReader(),
-      files = e.target.files
-    reader.onload = function () {
-      setAvatar(reader.result)
-    }
-    reader.readAsDataURL(files[0])
-  }
 
   const onSubmit = data => trigger()
 
   useEffect(() => {
     reset()
   }, [reset])
-
-  // Fake Data (Later will replace with data from API)
-  const statusOptions = [
-    { value: 'active', label: 'Active' },
-    { value: 'inactive', label: 'Inactive' }
-  ]
-  const roleOptions = [
-    { value: 'admin', label: 'Admin' },
-    { value: 'basic', label: 'Basic' }
-  ]
-  const languageOptions = [
-    { value: 'english', label: 'English' },
-    { value: 'french', label: 'French' }
-  ]
-  const [picker, setPicker] = useState(new Date())
 
   return (
     <Fragment>
@@ -54,62 +26,97 @@ const SettingsTabContent = ({ data }) => {
         <Row>
           <Col sm='3' md='2'>
             <FormGroup>
-              <Label for='status'>Currency</Label>
-              <Select
-                name="status"
-                options={statusOptions}
-                className='react-select'
-                classNamePrefix='select'
-                theme={selectThemeColors}
-              />
+              <Label for='currency'>Currency</Label>
+              <Controller
+                as={Input}
+                type='select'
+                name='currency'
+                id='currency'
+                control={control}
+                defaultValue={data?.businessProfile.currency}
+                invalid={data !== null && (data.businessProfile.currency === undefined || data.businessProfile.currency === null)}
+              >
+                <option value='AED'>AED</option>
+                <option value='USD'>USD</option>
+                <option value='SGD'>SGD</option>
+
+              </Controller>
             </FormGroup>
           </Col>
           <Col sm='3' md='2'>
             <FormGroup>
-              <Label for='status'>Time Zone</Label>
-              <Select
-                name="status"
-                options={statusOptions}
-                className='react-select'
-                classNamePrefix='select'
-                theme={selectThemeColors}
-              />
+              <Label for='timeZone'>Time Zone</Label>
+              <Controller
+                as={Input}
+                type='select'
+                name='timeZone'
+                id='timeZone'
+                control={control}
+                defaultValue={data?.businessProfile.timeZone}
+                invalid={data !== null && (data.businessProfile.timeZone === undefined || data.businessProfile.timeZone === null)}
+              >
+                <option value='Dubai'>Dubai</option>
+                <option value='US'>US</option>
+                <option value='Asia'>Asia</option>
+
+              </Controller>
             </FormGroup>
           </Col>
           <Col sm='3' md='2'>
             <FormGroup>
-              <Label for='status'>Slot Duration</Label>
-              <Select
-                name="status"
-                options={statusOptions}
-                className='react-select'
-                classNamePrefix='select'
-                theme={selectThemeColors}
-              />
+              <Label for='timeZone'>Slot Duration</Label>
+              <Controller
+                as={Input}
+                type='select'
+                name='timeZone'
+                id='timeZone1'
+                control={control}
+                defaultValue={data?.businessProfile.timeZone}
+                invalid={data !== null && (data.businessProfile.timeZone === undefined || data.businessProfile.timeZone === null)}
+              >
+                <option value='10 Minitues'>10 Minitues</option>
+                <option value='20 Minitues'>20 Minitues</option>
+                <option value='30 Minitues'>30 Minitues</option>
+
+              </Controller>
             </FormGroup>
           </Col>
-          <Col sm='3' md='2'>
+          <Col sm='3' md='3'>
             <FormGroup>
-              <Label for='status'>Online Visit Slot Duration</Label>
-              <Select
-                name="status"
-                options={statusOptions}
-                className='react-select'
-                classNamePrefix='select'
-                theme={selectThemeColors}
-              />
+              <Label for='timeZone'>Online Visit Slot Duration</Label>
+              <Controller
+                as={Input}
+                type='select'
+                name='timeZone'
+                id='timeZone2'
+                control={control}
+                defaultValue={data?.businessProfile.timeZone}
+                invalid={data !== null && (data.businessProfile.timeZone === undefined || data.businessProfile.timeZone === null)}
+              >
+                <option value='10 Minitues'>10 Minitues</option>
+                <option value='20 Minitues'>20 Minitues</option>
+                <option value='30 Minitues'>30 Minitues</option>
+
+              </Controller>
             </FormGroup>
           </Col>
-          <Col sm='3' md='2'>
+          <Col sm='3' md='3'>
             <FormGroup>
-              <Label for='status'>Status</Label>
-              <Select
-                name="status"
-                options={statusOptions}
-                className='react-select'
-                classNamePrefix='select'
-                theme={selectThemeColors}
-              />
+              <Label for='timeZone'>Home Visit Slot Duration</Label>
+              <Controller
+                as={Input}
+                type='select'
+                name='timeZone'
+                id='timeZone3'
+                control={control}
+                defaultValue={data?.businessProfile.timeZone}
+                invalid={data !== null && (data.businessProfile.timeZone === undefined || data.businessProfile.timeZone === null)}
+              >
+                <option value='10 Minitues'>10 Minitues</option>
+                <option value='20 Minitues'>20 Minitues</option>
+                <option value='30 Minitues'>30 Minitues</option>
+
+              </Controller>
             </FormGroup>
           </Col>
         </Row>

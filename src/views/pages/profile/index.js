@@ -25,9 +25,7 @@ const Profile = () => {
 
   useEffect(() => {
     // axios.get(`${endPints.baseUrl}/user`).then(response => setData(response.data.data) )
-    axios.get(`${endPints.baseUrl}/user`).
-      then(response => setData(response.data.data))
-    // then(response => setData(response.data.data))
+    axios.get('/api/customer/profile/data').then(response => setData(response.data))
 
   }, [])
 
@@ -48,19 +46,19 @@ const Profile = () => {
                   <CardBody>
                     <TabContent activeTab={activeTab}>
                       <TabPane tabId='1'>
-                        <AccountTabContent data={data} />
+                        <AccountTabContent data={data} setData={setData} />
                       </TabPane>
                       <TabPane tabId='2'>
-                        <BusinessTabContent />
+                        <BusinessTabContent data={data} setData={setData} />
                       </TabPane>
                       <TabPane tabId='3'>
                         <ErrorBoundary>
-                          <SettingsTabContent data={data} />
+                          <SettingsTabContent data={data} setData={setData} />
                         </ErrorBoundary>
                       </TabPane>
                       <TabPane tabId='4'>
                         <ErrorBoundary>
-                          <PayoutsTabContent data={data} />
+                          <PayoutsTabContent data={data} setData={setData} />
                         </ErrorBoundary>
                       </TabPane>
                       <TabPane tabId='5'>

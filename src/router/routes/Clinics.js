@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 const ClinicsRoutes = [
   {
     path: '/clinic/list',
-    component: lazy(() => import('../../views/clinics/list'))
+    component: lazy(() => import('../../views/clinic/list'))
   },
   {
     path: '/clinic/edit',
@@ -13,7 +13,7 @@ const ClinicsRoutes = [
   },
   {
     path: '/clinic/edit/:id',
-    component: lazy(() => import('../../views/clinics/edit')),
+    component: lazy(() => import('../../views/clinic/edit')),
     meta: {
       navLink: '/clinic/edit'
     }
@@ -25,14 +25,14 @@ const ClinicsRoutes = [
   },
   {
     path: '/clinic/view/:id',
-    component: lazy(() => import('../../views/clinics/view')),
+    component: lazy(() => import('../../views/clinic/view')),
     meta: {
       navLink: '/clinic/view'
     }
   },
   {
     path: '/clinic/workdays/edit/:id',
-    component: lazy(() => import('../../views/clinics/list')),
+    component: lazy(() => import('../../views/clinic/list')),
     meta: {
       navLink: '/clinic/workdays/edit'
     }

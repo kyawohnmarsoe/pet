@@ -1,6 +1,8 @@
 // ** React Imports
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import Breadcrumbs from '@components/breadcrumbs'
+
 
 // ** User Edit Components
 import SocialTab from './Social'
@@ -40,9 +42,10 @@ const ClinicEdit = () => {
     <Row className='app-user-edit'>
 
       <Col sm='12'>
+        <Breadcrumbs breadCrumbTitle='Clinics' breadCrumbActive='Clinics Edit' />
         <Card>
           <CardBody className='pt-2'>
-            <Nav pills>
+            {/* <Nav pills>
               <NavItem>
                 <NavLink active={activeTab === '1'} onClick={() => toggle('1')}>
                   <User size={14} />
@@ -61,7 +64,7 @@ const ClinicEdit = () => {
                   <span className='align-middle d-none d-sm-block'>Social</span>
                 </NavLink>
               </NavItem>
-            </Nav>
+            </Nav> */}
             <TabContent activeTab={activeTab}>
               <TabPane tabId='1'>
                 <AccountTab selectedClinic={store.selectedClinic} />

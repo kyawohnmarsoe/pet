@@ -5,47 +5,18 @@ import Select, { components } from 'react-select'
 import { selectThemeColors } from '@utils'
 import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form, CustomInput } from 'reactstrap'
 import Flatpickr from 'react-flatpickr'
+import { User, MapPin } from 'react-feather'
+import Cleave from 'cleave.js/react'
+import 'cleave.js/dist/addons/cleave-phone.us'
 
-
-// ** Default Avatar Image
-import defaultAvatar from '@src/assets/images/avatars/avatar-blank.png'
-
-
-const PayoutsTabContent = ({ data }) => {
-
+const PayoutsTabContent = ({ data, setData }) => {
   const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm()
-
-  const [avatar, setAvatar] = useState(data?.img ? data?.img : defaultAvatar)
-
-  const onChange = e => {
-    const reader = new FileReader(),
-      files = e.target.files
-    reader.onload = function () {
-      setAvatar(reader.result)
-    }
-    reader.readAsDataURL(files[0])
-  }
 
   const onSubmit = data => trigger()
 
   useEffect(() => {
     reset()
   }, [reset])
-
-  // Fake Data (Later will replace with data from API)
-  const statusOptions = [
-    { value: 'active', label: 'Active' },
-    { value: 'inactive', label: 'Inactive' }
-  ]
-  const roleOptions = [
-    { value: 'admin', label: 'Admin' },
-    { value: 'basic', label: 'Basic' }
-  ]
-  const languageOptions = [
-    { value: 'english', label: 'English' },
-    { value: 'french', label: 'French' }
-  ]
-  const [picker, setPicker] = useState(new Date())
 
   return (
     <Fragment>
@@ -56,30 +27,32 @@ const PayoutsTabContent = ({ data }) => {
 
           <Col sm='6' md='4'>
             <FormGroup>
-              <Label for='firstname'>Account Holder Name</Label>
+              <Label for='accountHolderName'>Account Holder Name</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.bankAccountInformation.accountHolderName}
                 control={control}
                 as={Input}
-                name='firstname'
-                onChange={e => setValue('firstname', e.target.value)}
+                name='accountHolderName'
+                innerRef={register({ required: true })}
+                onChange={e => setValue('accountHolderName', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.accountHolderName
                 })}
               />
             </FormGroup>
           </Col>
           <Col sm='6' md='4'>
             <FormGroup>
-              <Label for='firstname'>Petzola Commision %</Label>
+              <Label for='petzolaCommisionPercent'>Petzola Commision %</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.bankAccountInformation.petzolaCommisionPercent}
                 control={control}
                 as={Input}
-                name='firstname'
-                onChange={e => setValue('firstname', e.target.value)}
+                name='petzolaCommisionPercent'
+                innerRef={register({ required: true })}
+                onChange={e => setValue('petzolaCommisionPercent', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.petzolaCommisionPercent
                 })}
                 disabled
               />
@@ -88,50 +61,55 @@ const PayoutsTabContent = ({ data }) => {
           <Col sm='6' md='4'>
             <FormGroup>
               <Label for='firstname'>Current Plan</Label>
-              <div className='row m-0'>Plan Name, Expiry Date <span className='ml-auto'><a href="#"> Change</a></span></div>
+              <div className='row m-0'>{data?.accountInformation.subscriptionPlanId} - {data?.accountInformation.subscriptionPlanId} <span className='ml-auto'><a href="#"> Change</a></span></div>
             </FormGroup>
           </Col>
           <Col sm='6' md='4'>
             <FormGroup>
-              <Label for='firstname'>Bank Name</Label>
+              <Label for='bankName'>Bank Name</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.bankAccountInformation.bankName}
                 control={control}
                 as={Input}
-                name='firstname'
-                onChange={e => setValue('firstname', e.target.value)}
+                id='bankName'
+                name='bankName'
+                innerRef={register({ required: true })}
+                onChange={e => setValue('bankName', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.bankName
                 })}
               />
             </FormGroup>
           </Col>
           <Col sm='6' md='4'>
             <FormGroup>
-              <Label for='firstname'>IBAN</Label>
+              <Label for='iBAN'>IBAN</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.bankAccountInformation.iBAN}
                 control={control}
                 as={Input}
-                name='firstname'
-                onChange={e => setValue('firstname', e.target.value)}
+                id='iBAN'
+                name='iBAN'
+                innerRef={register({ required: true })}
+                onChange={e => setValue('iBAN', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.iBAN
                 })}
               />
             </FormGroup>
           </Col>
           <Col sm='6' md='4'>
             <FormGroup>
-              <Label for='firstname'>Petzola Commision %</Label>
+              <Label for='petzolaCommisionPercent'>Petzola Commision %</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.bankAccountInformation.petzolaCommisionPercent}
                 control={control}
                 as={Input}
-                name='firstname'
-                onChange={e => setValue('firstname', e.target.value)}
+                name='petzolaCommisionPercent'
+                innerRef={register({ required: true })}
+                onChange={e => setValue('petzolaCommisionPercent', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.petzolaCommisionPercent
                 })}
                 disabled
               />

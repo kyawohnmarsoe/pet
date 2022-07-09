@@ -5,47 +5,19 @@ import Select, { components } from 'react-select'
 import { selectThemeColors } from '@utils'
 import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form, CustomInput } from 'reactstrap'
 import Flatpickr from 'react-flatpickr'
+import { User, MapPin } from 'react-feather'
+import Cleave from 'cleave.js/react'
+import 'cleave.js/dist/addons/cleave-phone.us'
 
-
-// ** Default Avatar Image
-import defaultAvatar from '@src/assets/images/avatars/avatar-blank.png'
-
-
-const BusinessTabContent = ({ data }) => {
+const BusinessTabContent = ({ data, setData }) => {
 
   const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm()
-
-  const [avatar, setAvatar] = useState(data?.img ? data?.img : defaultAvatar)
-
-  const onChange = e => {
-    const reader = new FileReader(),
-      files = e.target.files
-    reader.onload = function () {
-      setAvatar(reader.result)
-    }
-    reader.readAsDataURL(files[0])
-  }
 
   const onSubmit = data => trigger()
 
   useEffect(() => {
     reset()
   }, [reset])
-
-  // Fake Data (Later will replace with data from API)
-  const statusOptions = [
-    { value: 'active', label: 'Active' },
-    { value: 'inactive', label: 'Inactive' }
-  ]
-  const roleOptions = [
-    { value: 'admin', label: 'Admin' },
-    { value: 'basic', label: 'Basic' }
-  ]
-  const languageOptions = [
-    { value: 'english', label: 'English' },
-    { value: 'french', label: 'French' }
-  ]
-  const [picker, setPicker] = useState(new Date())
 
   return (
     <Fragment>
@@ -54,54 +26,73 @@ const BusinessTabContent = ({ data }) => {
         <Row>
           <Col sm='6' md='4'>
             <FormGroup>
-              <Label for='firstname'>Company Name</Label>
+              <Label for='companyName'>Company Name</Label>
+
               <Controller
-                defaultValue='default'
+                defaultValue={data?.businessProfile.companyName}
                 control={control}
                 as={Input}
-                id='firstname'
-                name='firstname'
-                placeholder='firstname'
+                id='companyName'
+                name='companyName'
                 innerRef={register({ required: true })}
-                onChange={e => setValue('firstname', e.target.value)}
+                onChange={e => setValue('companyName', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.companyName
                 })}
               />
             </FormGroup>
           </Col>
           <Col sm='6' md='4'>
             <FormGroup>
-              <Label for='lastname'>Lastname</Label>
+              <Label for='companyNumber'>Phone</Label>
               <Controller
-                defaultValue='default'
+                as={Cleave}
                 control={control}
-                as={Input}
-                id='lastname'
-                name='lastname'
-                placeholder='lastname'
-                innerRef={register({ required: true })}
-                onChange={e => setValue('lastname', e.target.value)}
-                className={classnames({
-                  'is-invalid': errors.lastname
+                id='companyNumber'
+                name='companyNumber'
+                defaultValue={data?.businessProfile.companyNumber}
+                placeholder='1 234 567 8900'
+                options={{ phone: true, phoneRegionCode: 'US' }}
+                className={classnames('form-control', {
+                  'is-invalid': data !== null && (data?.businessProfile.companyNumber === undefined || data?.businessProfile.companyNumber === null)
                 })}
               />
             </FormGroup>
           </Col>
+
           <Col sm='6' md='4'>
             <FormGroup>
-              <Label for='email'>License Number</Label>
+              <Label for='companyType'>Business Type</Label>
               <Controller
-                defaultValue='default'
+                as={Input}
+                type='select'
+                name='companyType'
+                id='companyType'
+                control={control}
+                defaultValue={data?.businessProfile.companyType}
+                invalid={data !== null && (data.businessProfile.companyType === undefined || data.businessProfile.companyType === null)}
+              >
+                <option value='CLINIC'>CLINIC</option>
+                <option value='STORE'>STORE</option>
+                <option value='SPA'>SPA</option>
+
+              </Controller>
+            </FormGroup>
+          </Col>
+
+          <Col sm='6' md='4'>
+            <FormGroup>
+              <Label for='companyTradeLicense'>License Number</Label>
+              <Controller
+                defaultValue={data.businessProfile.companyTradeLicense}
                 control={control}
                 as={Input}
-                type='email'
-                id='email'
-                name='email'
+                id='companyTradeLicense'
+                name='companyTradeLicense'
                 innerRef={register({ required: true })}
-                onChange={e => setValue('email', e.target.value)}
+                onChange={e => setValue('companyTradeLicense', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.email
+                  'is-invalid': errors.companyTradeLicense
                 })}
               />
             </FormGroup>
@@ -109,113 +100,115 @@ const BusinessTabContent = ({ data }) => {
 
         </Row>
 
-        <h4 className="card-title mt-3">Address</h4 >
-
         <Row>
-
-          <Col sm='6' md='4'>
+          <Col sm='12'>
+            <h4 className='mb-1 mt-2'>
+              <MapPin size={20} className='mr-50' />
+              <span className='align-middle'>Address</span>
+            </h4>
+          </Col>
+          <Col lg='4' md='6'>
             <FormGroup>
-              <Label for='firstname'>Address Line 1</Label>
+              <Label for='addressLine1'>Address Line 1</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.businessProfile.addressLine1}
                 control={control}
                 as={Input}
-                name='firstname'
-                placeholder='Mobile'
+                id='addressLine1'
+                name='addressLine1'
                 innerRef={register({ required: true })}
-                onChange={e => setValue('firstname', e.target.value)}
+                onChange={e => setValue('addressLine1', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.addressLine1
                 })}
               />
             </FormGroup>
           </Col>
-          <Col sm='6' md='4'>
+          <Col lg='4' md='6'>
             <FormGroup>
-              <Label for='firstname'>Address Line 2</Label>
+              <Label for='addressLine2'>Address Line 2</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.businessProfile.addressLine2}
                 control={control}
                 as={Input}
-                name='firstname'
-                placeholder='Website'
+                id='addressLine2'
+                name='addressLine2'
                 innerRef={register({ required: true })}
-                onChange={e => setValue('firstname', e.target.value)}
+                onChange={e => setValue('addressLine2', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.addressLine2
                 })}
               />
             </FormGroup>
           </Col>
-          <Col sm='6' md='4'>
+          <Col lg='4' md='6'>
             <FormGroup>
-              <Label for='firstname'>Post Code</Label>
+              <Label for='postcode'>Postcode</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.businessProfile.postCode}
                 control={control}
                 as={Input}
-                name='firstname'
-                placeholder='Website'
+                id='postCode'
+                name='postCode'
                 innerRef={register({ required: true })}
-                onChange={e => setValue('firstname', e.target.value)}
+                onChange={e => setValue('postCode', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.postCode
                 })}
               />
             </FormGroup>
           </Col>
-          <Col sm='6' md='4'>
+          <Col lg='4' md='6'>
             <FormGroup>
-              <Label for='firstname'>City</Label>
+              <Label for='city'>City</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.businessProfile.city}
                 control={control}
                 as={Input}
-                name='firstname'
-                placeholder='Website'
+                id='city'
+                name='city'
                 innerRef={register({ required: true })}
-                onChange={e => setValue('firstname', e.target.value)}
+                onChange={e => setValue('city', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.city
                 })}
               />
             </FormGroup>
           </Col>
-          <Col sm='6' md='4'>
+          <Col lg='4' md='6'>
             <FormGroup>
-              <Label for='firstname'>State</Label>
+              <Label for='state'>State</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.businessProfile.state}
                 control={control}
                 as={Input}
-                name='firstname'
-                placeholder='Website'
+                id='state'
+                name='state'
                 innerRef={register({ required: true })}
-                onChange={e => setValue('firstname', e.target.value)}
+                onChange={e => setValue('state', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.state
                 })}
               />
             </FormGroup>
           </Col>
-          <Col sm='6' md='4'>
+          <Col lg='4' md='6'>
             <FormGroup>
-              <Label for='firstname'>Country</Label>
+              <Label for='country'>Country</Label>
               <Controller
-                defaultValue='default'
+                defaultValue={data?.businessProfile.country}
                 control={control}
                 as={Input}
-                name='firstname'
-                placeholder='Website'
+                id='country'
+                name='country'
                 innerRef={register({ required: true })}
-                onChange={e => setValue('firstname', e.target.value)}
+                onChange={e => setValue('country', e.target.value)}
                 className={classnames({
-                  'is-invalid': errors.firstname
+                  'is-invalid': errors.country
                 })}
               />
             </FormGroup>
           </Col>
-
         </Row>
 
         <Row>
