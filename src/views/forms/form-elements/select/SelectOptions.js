@@ -222,7 +222,6 @@ const SelectOptions = () => {
               options={colorOptions}
               className='react-select'
               classNamePrefix='select'
-              onChange={() => console.log(values.name)}
             />
           </Col>
           <Col className='mb-1' md='6' sm='12'>

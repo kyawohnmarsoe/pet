@@ -1,4 +1,5 @@
 // ** React Import
+import * as yup from 'yup'
 import { useState } from 'react'
 
 // ** Custom Components
@@ -8,12 +9,12 @@ import WorkDays from '../list/WorkDays'
 // ** Utils
 import { isObjEmpty } from '@utils'
 import Select from 'react-select'
-
+import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Third Party Components
 import classnames from 'classnames'
 import { useForm } from 'react-hook-form'
-import { Card, CardBody, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Alert, Button, FormGroup, Label, FormText, Form, Input } from 'reactstrap'
+import { Card, CardBody, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Alert, Button, FormGroup, Label, FormText, Form, Input, FormFeedback } from 'reactstrap'
 
 
 // ** Store & Actions
@@ -21,54 +22,94 @@ import { addClinic } from '../store/action'
 import { useDispatch } from 'react-redux'
 
 const ClinicAccountTab = () => {
-  // serviceCategories
-  const [serviceCategories, setServiceCategories] = useState([])
-  const serviceOptions = [
-    { value: 'General Consultation', label: 'General Consultation' },
-    { value: 'Vaccination', label: 'Vaccination' },
-    { value: 'Internal Medicine', label: 'Internal Medicine' }
-  ]
-  const serviceChange = (e) => {
-    setServiceCategories(Array.isArray(e) ? e.map(x => x.value) : [])
-    console.log(serviceCategories)
-  }
+  const SignupSchema = yup.object().shape({
+    clinicName: yup.string().required(),
+    status: yup.string().required(),
+    serviceLocationType: yup.string().required(),
+    serviceCategory: yup.string().required(),
+    xcoordinate: yup.string().required(),
+    ycoordinate: yup.string().required(),
+    country: yup.string().required(),
+    city: yup.string().required(),
+    landmark: yup.string().required(),
+    area: yup.string().required(),
+    street: yup.string().required(),
+    phone: yup.number().required(),
+    workingTimes: yup.string().required()
+  })
 
   // ** Store Vars
   const dispatch = useDispatch()
 
   // ** Vars
-  const { register, errors, handleSubmit } = useForm()
+  const { register, errors, handleSubmit } = useForm({ mode: 'onChange', resolver: yupResolver(SignupSchema) })
 
-  // ** Function to handle form submit
-  const onSubmit = values => {
-    if (isObjEmpty(errors)) {
-
-      // dispatch(
-      //   addClinic({
-      //     fullName: values['full-name'],
-      //     company: values.company,
-      //     role,
-      //     username: values.username,
-      //     country: values.country,
-      //     contact: values.contact,
-      //     email: values.email,
-      //     currentPlan: plan,
-      //     status: 'active',
-      //     avatar: ''
-      //   })
-      // )
-      console.log(values)
-    }
+  const onSubmit = data => {
+    console.log(data)
   }
 
-  const workingTimes = [
-    { value: 'Saturday', label: 'Saturday' },
-    { value: 'Tuesday', label: 'Tuesday' },
-    { value: 'Thursday', label: 'Thursday' }
+  // Categories
+  const [selectCategories, setSelectCategories] = useState([])
+  const categories = [
+    { value: 'General Consultation', label: 'General Consultation' },
+    { value: 'Vaccination', label: 'Vaccination' },
+    { value: 'Internal Medicine', label: 'Internal Medicine' }
   ]
+  const categoriesChange = (e) => {
+    setSelectCategories(Array.isArray(e) ? e.map(x => x.value) : [])
 
+  }
+  // Locations
+  const [selectLocations, setSelectLocations] = useState([])
+  const locations = [
+    { value: 'Home', label: 'Home' },
+    { value: 'Clinic', label: 'Clinic' }
+  ]
+  const locationsChange = (e) => {
+    setSelectLocations(Array.isArray(e) ? e.map(x => x.value) : [])
 
-  const [formModal, setFormModal] = useState(false)
+  }
+  // workingTimes
+  const [selectTimes, setSelectTimes] = useState([])
+  const times = [
+    { value: 'Sunday', label: 'Sunday', from: '10:00', to: '18:00' },
+    { value: 'Monday', label: 'Monday', from: '10:00', to: '18:00' },
+    { value: 'Tuesday', label: 'Tuesday', from: '10:00', to: '18:00' },
+    { value: 'Wednesday', label: 'Wednesday', from: '10:00', to: '18:00' },
+    { value: 'Thursday', label: 'Thursday', from: '10:00', to: '18:00' },
+    { value: 'Friday', label: 'Friday', from: '10:00', to: '18:00' },
+    { value: 'Saturday', label: 'Saturday', from: '10:00', to: '18:00' }
+  ]
+  const timesChange = (e) => {
+    setSelectTimes(Array.isArray(e) ? e.map(x => x.value) : [])
+
+  }
+
+  // ** Function to handle form submit
+  // const onSubmit = values => {
+  // if (isObjEmpty(errors)) {
+
+  // dispatch(
+  //   addClinic({
+  //     fullName: values['full-name'],
+  //     company: values.company,
+  //     role,
+  //     username: values.username,
+  //     country: values.country,
+  //     contact: values.contact,
+  //     email: values.email,
+  //     currentPlan: plan,
+  //     status: 'active',
+  //     avatar: ''
+  //   })
+  // )
+
+  //     console.log(values)
+  //     console.log(selectCategories)
+  //     console.log(selectLocations)
+  //     console.log(selectTimes)
+  //   }
+  // }
 
   const [workDaysOpen, setWorkDaysOpen] = useState(false)
   const toggleWorkDays = () => setWorkDaysOpen(!workDaysOpen)
@@ -85,9 +126,9 @@ const ClinicAccountTab = () => {
               <Input
                 name='clinicName'
                 id='clinicName'
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['clinicName'] })}
               />
+              {errors && errors.clinicName && <FormFeedback>{errors.clinicName.message}</FormFeedback>}
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -98,21 +139,24 @@ const ClinicAccountTab = () => {
               <div style={{ marginTop: '0.7rem' }}>
                 <FormGroup check inline>
                   <Label check>
-                    <Input type='radio' name='status' defaultChecked
-                      innerRef={register({ required: true })}
+                    <Input
+                      type='radio'
+                      name='status' defaultChecked
                       className={classnames({ 'is-invalid': errors['status'] })}
                     /> Open
                   </Label>
                 </FormGroup>
                 <FormGroup check inline>
                   <Label check>
-                    <Input type='radio' name='status'
-                      innerRef={register({ required: true })}
+                    <Input
+                      type='radio'
+                      name='status'
                       className={classnames({ 'is-invalid': errors['status'] })}
                     /> Close
                   </Label>
                 </FormGroup>
               </div>
+              {errors && errors.status && <FormFeedback>{errors.status.message}</FormFeedback>}
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -120,16 +164,19 @@ const ClinicAccountTab = () => {
               <Label for='serviceLocationType'>
                 Service Location <span className='text-danger'>*</span>
               </Label>
-              <Input
-                type='select'
+              <Select
+                isMulti
                 id='serviceLocationType'
                 name='serviceLocationType'
-                innerRef={register({ required: true })}
-                className={classnames({ 'is-invalid': errors['serviceLocationType'] })}
-              >
-                <option value='Clinic'>Clinic</option>
-                <option value='Home'>Home</option>
-              </Input>
+                value={locations.filter(obj => selectLocations.includes(obj.value))}
+                options={locations}
+                closeMenuOnSelect={false}
+                // className={classnames({ 'is-invalid': errors['serviceLocationType'] })}
+                invalid={errors.serviceLocationType && true}
+                onChange={locationsChange}
+
+              />
+              {errors && errors.serviceLocationType && <FormFeedback>{errors.serviceLocationType.message}</FormFeedback>}
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -140,13 +187,14 @@ const ClinicAccountTab = () => {
               <Select
                 isMulti
                 name="serviceCategory"
-                value={serviceOptions.filter(obj => serviceCategories.includes(obj.value))}
-                options={serviceOptions}
+                defaultValue={selectCategories[0]}
+                value={categories.filter(obj => selectCategories.includes(obj.value))}
+                options={categories}
                 closeMenuOnSelect={false}
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['serviceCategory'] })}
-                onChange={serviceChange}
+                onChange={categoriesChange}
               />
+              {errors && errors.serviceCategory && <FormFeedback>{errors.serviceCategory.message}</FormFeedback>}
 
             </FormGroup>
           </Col>
@@ -158,9 +206,10 @@ const ClinicAccountTab = () => {
               <Input
                 name='xcoordinate'
                 id='xcoordinate'
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['xcoordinate'] })}
               />
+              {errors && errors.xcoordinate && <FormFeedback>{errors.xcoordinate.message}</FormFeedback>}
+
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -171,9 +220,10 @@ const ClinicAccountTab = () => {
               <Input
                 name='ycoordinate'
                 id='ycoordinate'
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['ycoordinate'] })}
               />
+              {errors && errors.ycoordinate && <FormFeedback>{errors.ycoordinate.message}</FormFeedback>}
+
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -184,9 +234,10 @@ const ClinicAccountTab = () => {
               <Input
                 name='country'
                 id='country'
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['country'] })}
               />
+              {errors && errors.country && <FormFeedback>{errors.country.message}</FormFeedback>}
+
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -197,9 +248,10 @@ const ClinicAccountTab = () => {
               <Input
                 name='city'
                 id='city'
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['city'] })}
               />
+              {errors && errors.city && <FormFeedback>{errors.city.message}</FormFeedback>}
+
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -210,9 +262,10 @@ const ClinicAccountTab = () => {
               <Input
                 name='landmark'
                 id='landmark'
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['landmark'] })}
               />
+              {errors && errors.landmark && <FormFeedback>{errors.landmark.message}</FormFeedback>}
+
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -223,9 +276,10 @@ const ClinicAccountTab = () => {
               <Input
                 name='area'
                 id='area'
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['area'] })}
               />
+              {errors && errors.area && <FormFeedback>{errors.area.message}</FormFeedback>}
+
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -236,9 +290,10 @@ const ClinicAccountTab = () => {
               <Input
                 name='street'
                 id='street'
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['street'] })}
               />
+              {errors && errors.street && <FormFeedback>{errors.street.message}</FormFeedback>}
+
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -249,9 +304,10 @@ const ClinicAccountTab = () => {
               <Input
                 name='phone'
                 id='phone'
-                innerRef={register({ required: true })}
                 className={classnames({ 'is-invalid': errors['phone'] })}
               />
+              {errors && errors.phone && <FormFeedback>{errors.phone.message}</FormFeedback>}
+
             </FormGroup>
           </Col>
           <Col md='4' sm='12'>
@@ -261,15 +317,22 @@ const ClinicAccountTab = () => {
               </Label>
               <Row>
                 <Col md='10' sm='10'>
+
                   <Select
                     isMulti
                     name="workingTimes"
-                    options={workingTimes}
+                    defaultValue={times[0]}
+                    value={times.filter(obj => selectTimes.includes(obj.value))}
+                    options={times}
                     closeMenuOnSelect={false}
+                    className={classnames({ 'is-invalid': errors['workingTimes'] })}
+                    onChange={timesChange}
                   />
+                  {errors && errors.workingTimes && <FormFeedback>{errors.workingTimes.message}</FormFeedback>}
+
                 </Col>
                 <Col md='2' sm='2'>
-                  <span className="ml-auto" onClick={toggleWorkDays}>
+                  <span className="ml-auto button-link" onClick={toggleWorkDays}>
                     Edit
                   </span>
                 </Col>
@@ -286,9 +349,9 @@ const ClinicAccountTab = () => {
               <Input
                 name='aboutClinic'
                 id='aboutClinic'
-                innerRef={register({ required: true })}
-                className={classnames({ 'is-invalid': errors['aboutClinic'] })}
+                type="textarea"
               />
+
             </FormGroup>
           </Col>
           <Col md='4' sm='12'></Col>

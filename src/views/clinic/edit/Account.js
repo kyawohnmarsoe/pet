@@ -378,7 +378,7 @@ const ClinicAccountTab = ({ selectedClinic }) => {
 
                     </Col>
                     <Col md='2' sm='2'>
-                      <span className="ml-auto" onClick={toggleWorkDays1}>
+                      <span className="ml-auto button-link" onClick={toggleWorkDays1}>
                         Edit
                       </span>
                     </Col>

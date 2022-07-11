@@ -12,3 +12,30 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 .petzola .demo-inline-spacing > *{
 	margin-top: 0.5rem;
 }
+.petzola .custom-switch .custom-control-label::before{
+	background-color: #b2aeae;
+}
+.shift-rows-off{
+	background: #d6d3d3b0;
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+.shift-rows-on{
+	background: #d6d3d3b0;
+    border-radius: 8px 8px 0px 0px;
+    padding: 5px 10px;
+}
+.day-title{
+	font-size: 12px;
+	line-height: 25.5px;
+}
+.modal .petzola .modal-header .close{
+	transform: translate(0px, 0px);
+}
+.button-link{
+	color:#00adef;
+	cursor: pointer;
+}
+.form-group .is-invalid .css-yk16xz-control{
+	border-color: #ea5455;
+}

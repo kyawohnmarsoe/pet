@@ -11,21 +11,16 @@ const WorkDays = ({ open, toggleWorkDays, id }) => {
                 {/* <Button.Ripple color='primary' outline onClick={() => toggleWorkDays(!open)}>
                     Basic Modal
                 </Button.Ripple> */}
-                <Modal isOpen={open} toggle={() => toggleWorkDays(!open)} className='modal-lg modal-dialog-centered'>
+                <Modal isOpen={open} toggle={() => toggleWorkDays(!open)} className='modal-lg modal-dialog-centered petzola'>
                     <ModalHeader toggle={() => toggleWorkDays(!open)}>Branch Working Days</ModalHeader>
                     <ModalBody>
                         <div className="working-days">
-                            <div className="row m-0">Saturday
-                                <span className="ml-auto">
-                                    <CustomInput
-                                        type='switch'
-                                        id='exampleCustomSwitch'
-                                        name='customSwitch'
-                                        inline
-                                    />
-                                </span>
-                            </div>
-                            <Shifts />
+                            <Shifts day="Sunday" />
+                            <Shifts day="Monday" />
+                            <Shifts day="Tuesday" />
+                            <Shifts day="Thursday" />
+                            <Shifts day="Friday" />
+                            <Shifts day="Saturday" />
                         </div>
                     </ModalBody>
                     <ModalFooter>
