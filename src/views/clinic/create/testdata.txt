@@ -1,0 +1,151 @@
+{
+    avatar: '',
+    aboutClinic: "",
+    address: {
+        area: "",
+        city: "",
+        country: "",
+        landmark: "",
+        mapLocation: {
+            xcoordinate: "0",
+            ycoordinate: "0"
+        },
+        street: ""
+    },
+    clinicCode: "",
+    clinicName: "",
+    phone: "",
+    rate: "",
+    serviceCategory: [],
+    serviceLocationType: "",
+    status: "",
+    tollFree: "",
+    users: [
+        {
+            clinicWorkingTimes: [
+                {
+                    clinicId: 0,
+                    id: 0,
+                    numBookingSlot: 0,
+                    opCategoryFilter: "",
+                    operators: [],
+                    serviceDuration: 0,
+                    serviceLocationFilter: "",
+                    services: [],
+                    shifts: {
+                        additionalProp1: [
+                            {
+                                from: "",
+                                id: 0,
+                                to: ""
+                            }
+                        ],
+                        additionalProp2: [
+                            {
+                                from: "",
+                                id: 0,
+                                to: ""
+                            }
+                        ],
+                        additionalProp3: [
+                            {
+                                from: "",
+                                id: 0,
+                                to: ""
+                            }
+                        ]
+                    },
+                    status: "",
+                    timeBetweenService: 0,
+                    title: ""
+                }
+            ],
+            country: "",
+            email: "",
+            firstname: "",
+            id: "",
+            lastname: "",
+            mobile: "",
+            roleInClinic: "",
+            roles: [],
+            serviceOfferId: 0
+        }
+    ],
+    workingTimes:
+    {
+        clinicId: 0,
+        id: 0,
+        numBookingSlot: 0,
+        opCategoryFilter: "",
+        operators: [],
+        serviceDuration: 0,
+        serviceLocationFilter: "",
+        services: [],
+        shifts: [
+            {
+                value: 'Saturday',
+                label: 'Saturday',
+                from: "",
+                id: 0,
+                to: ""
+            },
+            {
+                value: 'Tuesday',
+                label: 'Tuesday',
+                from: "",
+                id: 0,
+                to: ""
+            }
+        ],
+        status: "",
+        timeBetweenService: 0,
+        title: ""
+    }
+
+}
+
+
+
+{
+       avatar: values.avatar,
+            aboutClinic: values.aboutClinic,
+            address: {
+                area: values.area,
+                city: values.city,
+                country: values.country,
+                landmark: values.landmark,
+                mapLocation: {
+                    xcoordinate: values.xcoordinate,
+                    ycoordinate: values.ycoordinate
+                },
+                street: values.street
+            },
+            clinicName: values.clinicName,
+            phone: values.phone,
+            serviceCategory: [values.serviceCategory],
+            serviceLocationType: values.serviceLocationType,
+            status: values.status,
+            tollFree: values.tollFree,
+
+            workingTimes:
+            {
+                clinicId: 2,
+                shifts: [
+                    {
+                        value: 'Saturday',
+                        label: 'Saturday',
+                        from: "",
+                        id: 0,
+                        to: ""
+                    },
+                    {
+                        value: 'Tuesday',
+                        label: 'Tuesday',
+                        from: "",
+                        id: 0,
+                        to: ""
+                    }
+                ]
+            }
+
+        }

@@ -54,7 +54,7 @@ const ClinicInfoCard = ({ selectedClinic }) => {
                     </CardText>
                   </div>
                   <div className='d-flex flex-wrap align-items-center'>
-                    <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedClinic.id}`} color='primary'>
+                    <Button.Ripple tag={Link} to={`/clinic/edit/${selectedClinic.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
                     <Button.Ripple className='ml-1' color='danger' outline>
@@ -91,7 +91,7 @@ const ClinicInfoCard = ({ selectedClinic }) => {
                 <div className='user-info-title'>
                   <User className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Username
+                    Clinic Name
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
@@ -106,18 +106,18 @@ const ClinicInfoCard = ({ selectedClinic }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedClinic !== null ? selectedClinic.clinicName : 'Active'}
+                  {selectedClinic !== null ? selectedClinic.status : 'Active'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
                 <div className='user-info-title'>
                   <Star className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Role
+                    Service Type
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedClinic !== null ? selectedClinic.clinicName : 'Admin'}
+                  {selectedClinic !== null ? selectedClinic.serviceLocationType : 'Admin'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -127,7 +127,7 @@ const ClinicInfoCard = ({ selectedClinic }) => {
                     Country
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedClinic !== null ? selectedClinic.clinicName : 'England'}</CardText>
+                <CardText className='mb-0'>{selectedClinic !== null ? selectedClinic.address.country : 'England'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
@@ -136,7 +136,7 @@ const ClinicInfoCard = ({ selectedClinic }) => {
                     Contact
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedClinic !== null ? selectedClinic.clinicName : '(123) 456-7890'}</CardText>
+                <CardText className='mb-0'>{selectedClinic !== null ? selectedClinic.phone : '(123) 456-7890'}</CardText>
               </div>
             </div>
           </Col>

@@ -11,13 +11,15 @@ import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
 import PlanCard from './PlanCard'
-import UserInfoCard from './UserInfoCard'
+import ClinicInfoCard from './ClinicInfoCard'
 import UserTimeline from './UserTimeline'
 // import InvoiceList from '../../invoice/list'
 import PermissionsTable from './PermissionsTable'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
+import ClinicDetail from './ClinicDetail'
+import ClinicUsers from './ClinicUsers'
 
 const ClinicView = props => {
   // ** Vars
@@ -33,19 +35,19 @@ const ClinicView = props => {
   return store.selectedClinic !== null && store.selectedClinic !== undefined ? (
     <div className='app-user-view'>
       <Row>
-        <Col xl='9' lg='8' md='7'>
-          <UserInfoCard selectedClinic={store.selectedClinic} />
+        <Col xl='12' lg='12' md='12'>
+          <ClinicInfoCard selectedClinic={store.selectedClinic} />
         </Col>
+        <Col xl='12' lg='12' md='12'>
+          <ClinicDetail selectedClinic={store.selectedClinic} />
+        </Col>
+        <Col xl='12' lg='12' md='12'>
+          {store.selectedClinic.users !== null ? store.selectedClinic.users.map(u => <ClinicUsers user={u} />) : 'Active'}
+
+        </Col>
+
         <Col xl='3' lg='4' md='5'>
           {/* <PlanCard selectedClinic={store.selectedClinic} /> */}
-        </Col>
-      </Row>
-      <Row>
-        <Col md='6'>
-          <UserTimeline />
-        </Col>
-        <Col md='6'>
-          <PermissionsTable />
         </Col>
       </Row>
       <Row>

@@ -15,7 +15,6 @@ import defaultAvatar from '@src/assets/images/avatars/avatar-blank.png'
 const AccountTabContent = ({ data, setData }) => {
 
   // ** State
-  const [img, setImg] = useState(null)
   const [avatar, setAvatar] = useState(data?.accountInformation.img ? data?.accountInformation.img : defaultAvatar)
 
   // ** React hook form vars
@@ -26,7 +25,7 @@ const AccountTabContent = ({ data, setData }) => {
     const reader = new FileReader(),
       files = e.target.files
     reader.onload = function () {
-      setImg(reader.result)
+      setAvatar(reader.result)
     }
     reader.readAsDataURL(files[0])
   }

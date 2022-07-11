@@ -1,10 +1,11 @@
 // ** React Imports
 import { useState, useEffect } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import classnames from 'classnames'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
 import Select from 'react-select'
-
 
 // ** Third Party Components
 import { Lock, Edit, Trash2 } from 'react-feather'
@@ -14,10 +15,20 @@ import {
 } from 'reactstrap'
 import WorkDays from '../list/WorkDays'
 
+// ** Default Avatar Image
+import defaultAvatar from '@src/assets/images/avatars/avatar-blank.png'
+import Cleave from 'cleave.js/react'
+import 'cleave.js/dist/addons/cleave-phone.us'
+
 const ClinicAccountTab = ({ selectedClinic }) => {
-  // ** States
+
+  // ** State
   const [img, setImg] = useState(null)
   const [clinicData, setClinicData] = useState(null)
+  const [avatar, setAvatar] = useState(selectedClinic?.avatar ? selectedClinic?.avatar : defaultAvatar)
+
+  const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm()
+
 
   // ** Function to change user image
   const onChange = e => {
@@ -28,6 +39,7 @@ const ClinicAccountTab = ({ selectedClinic }) => {
     }
     reader.readAsDataURL(files[0])
   }
+
   const imgRemove = e => {
     setImg(null)
   }
@@ -44,15 +56,15 @@ const ClinicAccountTab = ({ selectedClinic }) => {
     }
   }, [selectedClinic])
 
-  const options = [
-    { value: '1', label: 'General Consultation' },
-    { value: '2', label: 'Vaccination' },
-    { value: '3', label: 'Internal Medicine' }
+  const serviceCategories = [
+    { value: 'General Consultation', label: 'General Consultation' },
+    { value: 'Vaccination', label: 'Vaccination' },
+    { value: 'Internal Medicine', label: 'Internal Medicine' }
   ]
-  const workdaysOptions = [
-    { value: '1', label: 'Saturday' },
-    { value: '2', label: 'Tuesday' },
-    { value: '3', label: 'Thursday' }
+  const workingTimes = [
+    { value: 'Saturday', label: 'Saturday' },
+    { value: 'Tuesday', label: 'Tuesday' },
+    { value: 'Thursday', label: 'Thursday' }
   ]
   const [formModal, setFormModal] = useState(false)
 
@@ -60,7 +72,7 @@ const ClinicAccountTab = ({ selectedClinic }) => {
   const toggleWorkDays1 = () => setWorkDaysOpen1(!workDaysOpen1)
 
   // ** Renders User
-  const renderUserAvatar = () => {
+  const renderClinicAvatar = () => {
     if (img === null) {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
@@ -96,6 +108,7 @@ const ClinicAccountTab = ({ selectedClinic }) => {
     }
   }
 
+
   if (clinicData === null || clinicData === undefined) {
     return null
   } else {
@@ -104,7 +117,7 @@ const ClinicAccountTab = ({ selectedClinic }) => {
 
         <Col sm='12'>
           <Media className='mb-2'>
-            {renderUserAvatar()}
+            {renderClinicAvatar()}
             <Media className='mt-50' body>
               <h4>{selectedClinic.clinicName} </h4>
               <div className='d-flex flex-wrap mt-1 px-0'>
@@ -115,7 +128,7 @@ const ClinicAccountTab = ({ selectedClinic }) => {
                   </span>
                   <input type='file' hidden id='change-img' onChange={onChange} accept='image/*' />
                 </Button.Ripple>
-                <Button.Ripple color='secondary' outline onClick={imgRemove}>
+                <Button.Ripple color='secondary' outline>
                   <span className='d-none d-sm-block'>Remove</span>
                   <span className='d-block d-sm-none'>
                     <Trash2 size={14} />
@@ -130,135 +143,239 @@ const ClinicAccountTab = ({ selectedClinic }) => {
             <Row>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='username'><span className='text-danger'>*</span>Branch Name</Label>
-                  <Input type='text' id='username' placeholder='Username' defaultValue={clinicData.clinicName} disabled />
+                  <Label for='clinicName'><span className='text-danger'>*</span>Branch Name</Label>
+                  <Controller
+                    defaultValue={clinicData?.clinicName}
+                    control={control}
+                    as={Input}
+                    name='clinicName'
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('clinicName', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.clinicName
+                    })}
+                    disabled
+                  />
                 </FormGroup>
               </Col>
 
               <Col md='4' sm='12' className="petzola">
                 <FormGroup>
-                  <Label for='username'><span className='text-danger'>*</span>Status</Label>
-                  <div className='demo-inline-spacing'>
-                    <CustomInput type='radio' label='Open' name='status' id='open' />
-                    <CustomInput type='radio' label='Close' name='status' id='close' />
-                  </div>
+                  <label className='d-block mb-1'><span className='text-danger'>*</span>Status</label>
+                  <FormGroup>
+                    <Controller
+                      defaultValue={clinicData?.status}
+                      name='status'
+                      control={control}
+                      render={props => {
+                        return (
+                          <CustomInput
+                            inline
+                            type='radio'
+                            label='Open'
+                            value='Open'
+                            id='status-open'
+                            name={props.name}
+                            invalid={clinicData !== null && (clinicData.status === undefined || clinicData.status === null)}
+                            onChange={() => setValue('status', 'Open')}
+                          />
+                        )
+                      }}
+                    />
+                    <Controller
+                      name='status'
+                      control={control}
+                      render={props => {
+                        return (
+                          <CustomInput
+                            inline
+                            type='radio'
+                            label='Close'
+                            value='Close'
+                            id='status-close'
+                            name={props.name}
+                            invalid={clinicData !== null && (clinicData.status === undefined || clinicData.status === null)}
+                            onChange={() => setValue('status', 'Close')}
+                          />
+                        )
+                      }}
+                    />
+                  </FormGroup>
                 </FormGroup>
+
               </Col>
 
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='name'><span className='text-danger'>*</span>Service Location</Label>
-                  <Input type='text' id='name' placeholder='Name' defaultValue={clinicData.clinicName} />
+                  <Label for='serviceLocationType'><span className='text-danger'>*</span>Service Location</Label>
+                  <Controller
+                    as={Input}
+                    type='select'
+                    name='serviceLocationType'
+                    control={control}
+                    defaultValue={clinicData?.serviceLocationType}
+                    invalid={clinicData !== null && (clinicData.serviceLocationType === undefined || clinicData.serviceLocationType === null)}
+                  >
+                    <option value='Home Care'>Home Care</option>
+                    <option value='Clinic Care'>Clinic Care</option>
+                  </Controller>
                 </FormGroup>
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='email'><span className='text-danger'>*</span>Service Category</Label>
-                  {/* <Input type='text' id='email' placeholder='Email' defaultValue={clinicData.clinicName} /> */}
-
+                  <Label for='serviceCategory'><span className='text-danger'>*</span>Service Category</Label>
                   <Select
-                    closeMenuOnSelect={false}
-                    defaultValue={[options[4], options[5]]}
+                    defaultValue={clinicData?.serviceCategory}
                     isMulti
-                    options={options}
+                    name="serviceCategory"
+                    options={serviceCategories}
+                    closeMenuOnSelect={false}
                   />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='xcoordinate'><span className='text-danger'>*</span>X Coordinate</Label>
+                  <Controller
+                    defaultValue={clinicData?.address.mapLocation.xcoordinate}
+                    control={control}
+                    as={Input}
+                    name='xcoordinate'
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('xcoordinate', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.xcoordinate
+                    })}
 
-                </FormGroup>
-              </Col>
-              <Col md='4' sm='12'>
-                <FormGroup>
-                  <Label for='email'><span className='text-danger'>*</span>X Coordinate</Label>
-                  <Input type='text' id='email' placeholder='Email' defaultValue={clinicData.clinicName} />
-                </FormGroup>
-              </Col>
-              <Col md='4' sm='12'>
-                <FormGroup>
-                  <Label for='email'><span className='text-danger'>*</span>Y Coordinate</Label>
-                  <Input type='text' id='email' placeholder='Email' defaultValue={clinicData.clinicName} />
-                </FormGroup>
-              </Col>
-              <Col md='4' sm='12'>
-                <FormGroup>
-                  <Label for='status'><span className='text-danger'>*</span>Country</Label>
-                  <Input type='select' name='status' id='status' defaultValue={clinicData.clinicName}>
-                    <option value='pending'>Pending</option>
-                    <option value='active'>Active</option>
-                    <option value='inactive'>Inactive</option>
-                  </Input>
-                </FormGroup>
-              </Col>
-              <Col md='4' sm='12'>
-                <FormGroup>
-                  <Label for='role'><span className='text-danger'>*</span>City</Label>
-                  <Input type='select' name='role' id='role' defaultValue={clinicData.clinicName}>
-                    <option value='admin'>Admin</option>
-                    <option value='author'>Author</option>
-                    <option value='editor'>Editor</option>
-                    <option value='maintainer'>Maintainer</option>
-                    <option value='subscriber'>Subscriber</option>
-                  </Input>
-                </FormGroup>
-              </Col>
-              <Col md='4' sm='12'>
-                <FormGroup>
-                  <Label for='company'><span className='text-danger'>*</span>Landmark</Label>
-                  <Input
-                    type='text'
-                    id='company'
-                    defaultValue={clinicData.clinicName}
-                    placeholder='WinDon Technologies Pvt Ltd'
-                    disabled
                   />
                 </FormGroup>
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='company'><span className='text-danger'>*</span>Landmark</Label>
-                  <Input
-                    type='text'
-                    id='company'
-                    defaultValue={clinicData.clinicName}
-                    placeholder='WinDon Technologies Pvt Ltd'
-                    disabled
+                  <Label for='ycoordinate'><span className='text-danger'>*</span>Y Coordinate</Label>
+                  <Controller
+                    defaultValue={clinicData?.address.mapLocation.ycoordinate}
+                    control={control}
+                    as={Input}
+                    name='ycoordinate'
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('ycoordinate', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.ycoordinate
+                    })}
+
                   />
                 </FormGroup>
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='company'><span className='text-danger'>*</span>Street</Label>
-                  <Input
-                    type='text'
-                    id='company'
-                    defaultValue={clinicData.clinicName}
-                    placeholder='WinDon Technologies Pvt Ltd'
-                    disabled
+                  <Label for='country'><span className='text-danger'>*</span>Country</Label>
+                  <Controller
+                    defaultValue={clinicData?.address.country}
+                    control={control}
+                    as={Input}
+                    name='country'
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('country', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.country
+                    })}
                   />
                 </FormGroup>
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='company'><span className='text-danger'>*</span>Branch Tel Number</Label>
-                  <Input
-                    type='text'
-                    id='company'
-                    defaultValue={clinicData.clinicName}
-                    placeholder='WinDon Technologies Pvt Ltd'
-                    disabled
+                  <Label for='city'><span className='text-danger'>*</span>City</Label>
+                  <Controller
+                    defaultValue={clinicData?.address.city}
+                    control={control}
+                    as={Input}
+                    name='city'
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('city', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.city
+                    })}
                   />
                 </FormGroup>
               </Col>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='company'><span className='text-danger'>*</span>Branch Workdays</Label>
+                  <Label for='landmark'><span className='text-danger'>*</span>Landmark</Label>
+                  <Controller
+                    defaultValue={clinicData?.address.landmark}
+                    control={control}
+                    as={Input}
+                    name='landmark'
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('landmark', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.landmark
+                    })}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='area'><span className='text-danger'>*</span>Area</Label>
+                  <Controller
+                    defaultValue={clinicData?.address.area}
+                    control={control}
+                    as={Input}
+                    name='area'
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('area', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.area
+                    })}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='street'><span className='text-danger'>*</span>Street</Label>
+                  <Controller
+                    defaultValue={clinicData?.address.street}
+                    control={control}
+                    as={Input}
+                    name='street'
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('street', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.street
+                    })}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='phone'><span className='text-danger'>*</span>Branch Tel Number</Label>
+                  <Controller
+                    as={Cleave}
+                    control={control}
+                    name='phone'
+                    defaultValue={clinicData?.phone}
+                    options={{ phone: true, phoneRegionCode: 'US' }}
+                    className={classnames('form-control', {
+                      'is-invalid': clinicData !== null && (clinicData.phone === undefined || clinicData.phone === null)
+                    })}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='4' sm='12'>
+                <FormGroup>
+                  <Label for='workingTimes'><span className='text-danger'>*</span>Branch Workdays</Label>
 
                   <Row>
                     <Col md='10' sm='10'>
                       <Select
-                        closeMenuOnSelect={false}
-                        defaultValue={[workdaysOptions[4], workdaysOptions[5]]}
+                        defaultValue={clinicData?.workingTimes.shifts}
                         isMulti
-                        options={workdaysOptions}
+                        name="workingTimes"
+                        options={workingTimes}
+                        closeMenuOnSelect={false}
                       />
+
                     </Col>
                     <Col md='2' sm='2'>
                       <span className="ml-auto" onClick={toggleWorkDays1}>
@@ -275,13 +392,11 @@ const ClinicAccountTab = ({ selectedClinic }) => {
               </div>
               <Col md='4' sm='12'>
                 <FormGroup>
-                  <Label for='company'>About Branch</Label>
-                  <Input
-                    type='text'
-                    id='company'
-                    defaultValue={clinicData.clinicName}
-                    placeholder='WinDon Technologies Pvt Ltd'
-                  />
+                  <Label for='aboutClinic'>About Branch</Label>
+
+                  <Input type='textarea' name='aboutClinic' id='exampleText' rows='3'
+                    onChange={e => setValue('aboutClinic', e.target.value)}
+                    defaultValue={clinicData?.aboutClinic} />
                 </FormGroup>
               </Col>
 

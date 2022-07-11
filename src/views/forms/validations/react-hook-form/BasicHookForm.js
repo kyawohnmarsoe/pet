@@ -3,7 +3,7 @@ import { Check } from 'react-feather'
 import { toast } from 'react-toastify'
 import Avatar from '@components/avatar'
 import { useForm } from 'react-hook-form'
-import { Card, CardHeader, CardTitle, CardBody, Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import { Card, CardHeader, CardTitle, CardBody, Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
 
 const SuccessToast = ({ data }) => {
   return (
@@ -54,6 +54,7 @@ const BasicHookForm = () => {
               invalid={errors.firstNameBasic && true}
               placeholder='Bruce'
             />
+            {errors && errors.firstNameBasic && <FormFeedback>{errors.firstNameBasic.message}</FormFeedback>}
           </FormGroup>
           <FormGroup>
             <Label for='lastNameBasic'>Last Name</Label>
