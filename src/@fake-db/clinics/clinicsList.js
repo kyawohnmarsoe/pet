@@ -19,6 +19,112 @@ const data = {
                 street: "Al Blah Blah"
             },
             clinicCode: "90",
+            clinicName: "Pet World",
+            phone: "9090909",
+            rate: "0",
+            serviceCategory: [{ value: 'General Consultation', label: 'General Consultation' }],
+            serviceLocationType: "Clinic Care",
+            status: "Open",
+            tollFree: "DEF",
+            users: [
+                {
+                    clinicWorkingTimes: [
+                        {
+                            clinicId: 12,
+                            id: 88,
+                            numBookingSlot: 3,
+                            opCategoryFilter: "Vaccination",
+                            operators: [2],
+                            serviceDuration: 30,
+                            serviceLocationFilter: "Downtown",
+                            services: [1, 2, 3],
+                            shifts: {
+                                additionalProp1: [
+                                    {
+                                        from: "SAT",
+                                        id: 1,
+                                        to: "MON"
+                                    }
+                                ],
+                                additionalProp2: [
+                                    {
+                                        from: "FRI",
+                                        id: 2,
+                                        to: "SUN"
+                                    }
+                                ],
+                                additionalProp3: [
+                                    {
+                                        from: "TUE",
+                                        id: 3,
+                                        to: "THU"
+                                    }
+                                ]
+                            },
+                            status: "ACTIVE",
+                            timeBetweenService: 30,
+                            title: "Big Big Big"
+                        }
+                    ],
+                    country: "UAE",
+                    email: "kohnmars@gmail.com",
+                    firstname: "mo",
+                    id: "34",
+                    lastname: "mo",
+                    mobile: "999992332",
+                    roleInClinic: "ADMIN",
+                    roles: ["VET"],
+                    serviceOfferId: 3
+                }
+            ],
+            workingTimes:
+            {
+                clinicId: 2,
+                id: 3,
+                numBookingSlot: 10,
+                opCategoryFilter: "Vaccination",
+                operators: [2, 3],
+                serviceDuration: 40,
+                serviceLocationFilter: "Downtown",
+                services: [4, 5],
+                shifts: [
+                    {
+                        value: 'Saturday',
+                        label: 'Saturday',
+                        from: "MON",
+                        id: 1,
+                        to: "SAT"
+                    },
+                    {
+                        value: 'Tuesday',
+                        label: 'Tuesday',
+                        from: "FRI",
+                        id: 2,
+                        to: "SUN"
+                    }
+                ],
+                status: "ACTIVE",
+                timeBetweenService: 50,
+                title: "Aye Say Lay"
+            }
+
+        },
+        {
+            avatar: '',
+            id: 45,
+            aboutClinic: "skfjsijfeimdmvcd,s",
+            address: {
+                area: "Downtown",
+                city: "Dubai",
+                country: "UAE",
+                landmark: "Dubai Mall",
+                mapLocation: {
+                    xcoordinate: "0",
+                    ycoordinate: "0"
+                },
+                street: "Al Blah Blah"
+            },
+            clinicCode: "90",
             clinicName: "Snowy Fur",
             phone: "9090909",
             rate: "0",
@@ -110,26 +216,110 @@ const data = {
 
         },
         {
-            id: 35,
-            clinicCode: "35",
-            clinicName: "Cute Pet",
+            avatar: '',
+            id: 39,
+            aboutClinic: "skfjsijfeimdmvcd,s",
             address: {
-                city: "dubai"
+                area: "Downtown",
+                city: "Dubai",
+                country: "UAE",
+                landmark: "Dubai Mall",
+                mapLocation: {
+                    xcoordinate: "0",
+                    ycoordinate: "0"
+                },
+                street: "Al Blah Blah"
             },
-            phone: "123342",
-            status: "Active",
-            avatar: ''
-        },
-        {
-            id: 36,
-            clinicCode: "36",
-            clinicName: "Cute Dogs",
-            address: {
-                city: "dubai"
-            },
-            phone: "123333342",
-            status: "Active",
-            avatar: ''
+            clinicCode: "90",
+            clinicName: "Ku Ku's Villa",
+            phone: "9090909",
+            rate: "0",
+            serviceCategory: [{ value: 'General Consultation', label: 'General Consultation' }],
+            serviceLocationType: "Clinic Care",
+            status: "Open",
+            tollFree: "DEF",
+            users: [
+                {
+                    clinicWorkingTimes: [
+                        {
+                            clinicId: 12,
+                            id: 88,
+                            numBookingSlot: 3,
+                            opCategoryFilter: "Vaccination",
+                            operators: [2],
+                            serviceDuration: 30,
+                            serviceLocationFilter: "Downtown",
+                            services: [1, 2, 3],
+                            shifts: {
+                                additionalProp1: [
+                                    {
+                                        from: "SAT",
+                                        id: 1,
+                                        to: "MON"
+                                    }
+                                ],
+                                additionalProp2: [
+                                    {
+                                        from: "FRI",
+                                        id: 2,
+                                        to: "SUN"
+                                    }
+                                ],
+                                additionalProp3: [
+                                    {
+                                        from: "TUE",
+                                        id: 3,
+                                        to: "THU"
+                                    }
+                                ]
+                            },
+                            status: "ACTIVE",
+                            timeBetweenService: 30,
+                            title: "Big Big Big"
+                        }
+                    ],
+                    country: "UAE",
+                    email: "kohnmars@gmail.com",
+                    firstname: "mo",
+                    id: "34",
+                    lastname: "mo",
+                    mobile: "999992332",
+                    roleInClinic: "ADMIN",
+                    roles: ["VET"],
+                    serviceOfferId: 3
+                }
+            ],
+            workingTimes:
+            {
+                clinicId: 2,
+                id: 3,
+                numBookingSlot: 10,
+                opCategoryFilter: "Vaccination",
+                operators: [2, 3],
+                serviceDuration: 40,
+                serviceLocationFilter: "Downtown",
+                services: [4, 5],
+                shifts: [
+                    {
+                        value: 'Saturday',
+                        label: 'Saturday',
+                        from: "MON",
+                        id: 1,
+                        to: "SAT"
+                    },
+                    {
+                        value: 'Tuesday',
+                        label: 'Tuesday',
+                        from: "FRI",
+                        id: 2,
+                        to: "SUN"
+                    }
+                ],
+                status: "ACTIVE",
+                timeBetweenService: 50,
+                title: "Aye Say Lay"
+            }
+
         }
     ]
 }

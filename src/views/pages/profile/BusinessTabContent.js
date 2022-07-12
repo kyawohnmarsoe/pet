@@ -13,10 +13,33 @@ const BusinessTabContent = ({ data, setData }) => {
 
   const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm()
 
-  const onSubmit = data => trigger()
+  // const onSubmit = data => trigger()
+  const onSubmit = values => {
+    const newBusinessInfo = {
+      ...data,
+      businessProfile: {
+        addressLine1: values.addressLine1 ? values.addressLine1 : data.businessProfile.addressLine1,
+        addressLine2: values.addressLine2 ? values.addressLine2 : data.businessProfile.addressLine2,
+        city: values.city ? values.city : data.businessProfile.city,
+        companyName: values.companyName ? values.companyName : data.businessProfile.companyName,
+        companyNumber: values.companyNumber ? values.companyNumber : data.businessProfile.companyNumber,
+        companyTradeLicense: values.companyTradeLicense ? values.companyTradeLicense : data.businessProfile.companyTradeLicense,
+        companyType: values.companyType ? values.companyType : data.businessProfile.companyType,
+        country: values.country ? values.country : data.businessProfile.country,
+        currency: values.currency ? values.currency : data.businessProfile.currency,
+        postCode: values.postCode ? values.postCode : data.businessProfile.postCode,
+        state: values.state ? values.state : data.businessProfile.state,
+        timeZone: values.timeZone ? values.timeZone : data.businessProfile.timeZone
+
+      }
+    }
+    console.log(newBusinessInfo)
+
+  }
 
   useEffect(() => {
     reset()
+    // console.log(data)
   }, [reset])
 
   return (

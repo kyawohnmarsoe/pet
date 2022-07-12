@@ -1,5 +1,6 @@
 // ** React Import
 import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 
 // ** Custom Components
@@ -9,7 +10,6 @@ import WorkDays from '../list/WorkDays'
 // ** Utils
 import { isObjEmpty } from '@utils'
 import Select from 'react-select'
-import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Third Party Components
 import classnames from 'classnames'
@@ -171,8 +171,7 @@ const ClinicAccountTab = () => {
                 value={locations.filter(obj => selectLocations.includes(obj.value))}
                 options={locations}
                 closeMenuOnSelect={false}
-                // className={classnames({ 'is-invalid': errors['serviceLocationType'] })}
-                invalid={errors.serviceLocationType && true}
+                className={classnames({ 'is-invalid': errors['serviceLocationType'] })}
                 onChange={locationsChange}
 
               />

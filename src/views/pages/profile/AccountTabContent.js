@@ -1,9 +1,11 @@
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Fragment, useState, useEffect } from 'react'
 import classnames from 'classnames'
 import { useForm, Controller } from 'react-hook-form'
 import Select, { components } from 'react-select'
 import { selectThemeColors } from '@utils'
-import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form, CustomInput } from 'reactstrap'
+import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form, CustomInput, FormFeedback } from 'reactstrap'
 import Flatpickr from 'react-flatpickr'
 import { User, MapPin } from 'react-feather'
 import Cleave from 'cleave.js/react'
@@ -14,27 +16,60 @@ import defaultAvatar from '@src/assets/images/avatars/avatar-blank.png'
 
 const AccountTabContent = ({ data, setData }) => {
 
+  const SignupSchema = yup.object().shape({
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    email: yup.string().required()
+  })
+
   // ** State
-  const [avatar, setAvatar] = useState(data?.accountInformation.img ? data?.accountInformation.img : defaultAvatar)
+  // const [avatar, setAvatar] = useState(data?.accountInformation.img ? data?.accountInformation.img : defaultAvatar)
 
   // ** React hook form vars
-  const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm()
+  const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm({ mode: 'onChange', resolver: yupResolver(SignupSchema) })
 
   // ** Function to change user image
   const onChange = e => {
-    const reader = new FileReader(),
-      files = e.target.files
-    reader.onload = function () {
-      setAvatar(reader.result)
-    }
-    reader.readAsDataURL(files[0])
+    // const reader = new FileReader(),
+    //   files = e.target.files
+    // reader.onload = function () {
+    //   setAvatar(reader.result)
+    // }
+    // reader.readAsDataURL(files[0])
   }
 
-  const onSubmit = data => trigger()
+  // const onSubmit = data => trigger()
+
+  const onSubmit = values => {
+    const newAccountInfo = {
+      ...data,
+      accountInformation: {
+        dateofBirth: values.dateofBirth ? values.dateofBirth : data.accountInformation.dateofBirth,
+        email: values.email ? values.email : data.accountInformation.email,
+        firstName: values.firstName ? values.firstName : data.accountInformation.firstName,
+        gender: values.gender ? values.gender : data.accountInformation.gender,
+        id: values.id ? values.id : data.accountInformation.id,
+        identityExpirydate: values.identityExpirydate ? values.identityExpirydate : data.accountInformation.identityExpirydate,
+        identityNumber: values.identityNumber ? values.identityNumber : data.accountInformation.identityNumber,
+        lastName: values.lastName ? values.lastName : data.accountInformation.lastName,
+        mobileNumber: values.mobileNumber ? values.mobileNumber : data.accountInformation.mobileNumber,
+        preferedContactOptions: values.preferedContactOptions ? values.preferedContactOptions : data.accountInformation.preferedContactOptions,
+        primaryLanguage: values.primaryLanguage ? values.primaryLanguage : data.accountInformation.primaryLanguage,
+        status: values.status ? values.status : data.accountInformation.status,
+        subscriptionPlanId: values.subscriptionPlanId ? values.subscriptionPlanId : data.accountInformation.subscriptionPlanId,
+        userRoleId: values.userRoleId ? values.userRoleId : data.accountInformation.userRoleId,
+        websiteURL: values.websiteURL ? values.websiteURL : data.accountInformation.websiteURL
+      }
+    }
+
+    console.log(newAccountInfo)
+  }
 
   useEffect(() => {
     reset()
+    console.log(data)
   }, [reset])
+
 
   // if (data === null || data === undefined) {
   //   return null
@@ -44,12 +79,12 @@ const AccountTabContent = ({ data, setData }) => {
       <Col sm='12'>
         <Media>
           <Media className='mr-25' left>
-            <Media object className='rounded mr-50' src={avatar} alt='Generic placeholder image' height='80' width='80' />
+            {/* <Media object className='rounded mr-50' src={avatar} alt='Generic placeholder image' height='80' width='80' /> */}
           </Media>
           <Media className='mt-75 ml-1' body>
             <Button.Ripple tag={Label} className='mr-75' size='sm' color='primary'>
               Upload
-              <Input type='file' onChange={onChange} hidden accept='image/*' />
+              {/* <Input type='file' onChange={onChange} hidden accept='image/*' /> */}
             </Button.Ripple>
             <Button.Ripple color='secondary' size='sm' outline onClick={() => { reset({ ...data }) }}>
               Reset
@@ -60,14 +95,11 @@ const AccountTabContent = ({ data, setData }) => {
       </Col>
 
       <Col sm='12' className='mt-2'>
-        <Form onSubmit={handleSubmit(data => {
-          trigger()
-          setData(data)
-        })}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Row>
             <Col sm='6' md='4'>
               <FormGroup>
-                <Label for='firstName'>First Name</Label>
+                <Label for='firstName'>First Name<span className='text-danger'>*</span></Label>
                 <Controller
                   defaultValue={data?.accountInformation.firstName}
                   control={control}
@@ -79,11 +111,13 @@ const AccountTabContent = ({ data, setData }) => {
                     'is-invalid': errors.firstName
                   })}
                 />
+                {errors && errors.firstName && <FormFeedback>{errors.firstName.message}</FormFeedback>}
+
               </FormGroup>
             </Col>
             <Col sm='6' md='4'>
               <FormGroup>
-                <Label for='lastName'>Last Name</Label>
+                <Label for='lastName'>Last Name<span className='text-danger'>*</span></Label>
                 <Controller
                   defaultValue={data?.accountInformation.lastName}
                   control={control}
@@ -95,24 +129,28 @@ const AccountTabContent = ({ data, setData }) => {
                     'is-invalid': errors.lastName
                   })}
                 />
+                {errors && errors.lastName && <FormFeedback>{errors.lastName.message}</FormFeedback>}
+
               </FormGroup>
             </Col>
             <Col sm='6' md='4'>
               <FormGroup>
-                <Label for='email'>Email</Label>
+                <Label for='email'>Email<span className='text-danger'>*</span></Label>
                 <Controller
                   defaultValue={data?.accountInformation.email}
+                  value={data?.accountInformation.email}
                   control={control}
                   as={Input}
                   type='email'
                   name='email'
-                  disabled
                   innerRef={register({ required: true })}
                   onChange={e => setValue('email', e.target.value)}
                   className={classnames({
                     'is-invalid': errors.email
                   })}
                 />
+                {errors && errors.email && <FormFeedback>{errors.email.message}</FormFeedback>}
+
               </FormGroup>
             </Col>
             <Col sm='6' md='4'>
@@ -198,7 +236,7 @@ const AccountTabContent = ({ data, setData }) => {
               <FormGroup>
                 <Label for='websiteURL'>Website</Label>
                 <Input
-                  type='url'
+                  type='text'
                   name='websiteURL'
                   placeholder='https://google.com'
                   defaultValue={data?.accountInformation.websiteURL}

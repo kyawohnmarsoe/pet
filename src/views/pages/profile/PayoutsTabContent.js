@@ -12,10 +12,32 @@ import 'cleave.js/dist/addons/cleave-phone.us'
 const PayoutsTabContent = ({ data, setData }) => {
   const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm()
 
-  const onSubmit = data => trigger()
+  // const onSubmit = data => trigger()
+
+  const onSubmit = values => {
+    const newBankInfo = {
+      ...data,
+      bankAccountInformation: {
+        accountHolderName: values.accountHolderName ? values.accountHolderName : data.bankAccountInformation.accountHolderName,
+        accountNumber: values.accountNumber ? values.accountNumber : data.bankAccountInformation.accountNumber,
+        bankName: values.bankName ? values.bankName : data.bankAccountInformation.bankName,
+        createdByUserID: values.createdByUserID ? values.createdByUserID : data.bankAccountInformation.createdByUserID,
+        createdByUserName: values.createdByUserName ? values.createdByUserName : data.bankAccountInformation.createdByUserName,
+        creationDate: values.creationDate ? values.creationDate : data.bankAccountInformation.creationDate,
+        iBAN: values.iBAN ? values.iBAN : data.bankAccountInformation.iBAN,
+        modificationDate: values.modificationDate ? values.modificationDate : data.bankAccountInformation.modificationDate,
+        petzolaCommisionPercent: values.petzolaCommisionPercent ? values.petzolaCommisionPercent : data.bankAccountInformation.petzolaCommisionPercent,
+        stripeAccountCreationDate: values.stripeAccountCreationDate ? values.stripeAccountCreationDate : data.bankAccountInformation.stripeAccountCreationDate,
+        stripeCustomerAccoundID: values.stripeCustomerAccoundID ? values.stripeCustomerAccoundID : data.bankAccountInformation.stripeCustomerAccoundID
+      }
+    }
+    console.log(newBankInfo)
+  }
 
   useEffect(() => {
     reset()
+    // console.log(data)
+
   }, [reset])
 
   return (

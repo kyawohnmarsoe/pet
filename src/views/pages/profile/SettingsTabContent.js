@@ -13,10 +13,24 @@ const SettingsTabContent = ({ data, setData }) => {
 
   const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm()
 
-  const onSubmit = data => trigger()
+  // const onSubmit = data => trigger()
+  const onSubmit = values => {
+    const newSettingInfo = {
+      ...data,
+      businessProfile: {
+        ...data.businessProfile,
+        country: values.country ? values.country : data.businessProfile.country,
+        currency: values.currency ? values.currency : data.businessProfile.currency,
+        timeZone: values.timeZone ? values.timeZone : data.businessProfile.timeZone
+      }
+    }
+    console.log(newSettingInfo)
+
+  }
 
   useEffect(() => {
     reset()
+    // console.log(data)
   }, [reset])
 
   return (
