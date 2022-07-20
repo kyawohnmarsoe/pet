@@ -9,4 +9,5 @@ import uiElements from './ui-elements'
 import chartsAndMaps from './charts-maps'
 
 // ** Merge & Export
-export default [...apps, ...pages, ...forms, ...uiElements]
+// export default [...apps, ...pages, ...forms, ...uiElements]
+export default [...apps]

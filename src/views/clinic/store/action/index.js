@@ -1,9 +1,11 @@
 import axios from 'axios'
+import Petzola from '../../../../api/Petzola'
 
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
     await axios.get('/api/clinics/list/all-data').then(response => {
+      // await Petzola.post('/clinicV2/search',{clinicId:40}).then(response=>{
       dispatch({
         type: 'GET_ALL_DATA',
         data: response.data

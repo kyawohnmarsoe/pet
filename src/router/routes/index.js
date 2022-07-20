@@ -9,12 +9,14 @@ import UiElementRoutes from './UiElements'
 import ExtensionsRoutes from './Extensions'
 import PageLayoutsRoutes from './PageLayouts'
 import ClinicsRoutes from './Clinics'
+// import OperatorsRoutes from './Operators'
+// import SubscriptionRoutes from './Subscription'
 
 // ** Document title
 const TemplateTitle = '%s - Vuexy React Admin Template'
 
 // ** Default Route
-const DefaultRoute = '/pages/pricing'
+const DefaultRoute = '/apps/subscription/pricing'
 
 // ** Merge Routes
 const Routes = [
@@ -28,6 +30,8 @@ const Routes = [
   ...TablesRoutes,
   ...ChartMapsRoutes,
   ...ClinicsRoutes
+  // ...OperatorsRoutes
+  // ...SubscriptionRoutes
 ]
 
 export { DefaultRoute, TemplateTitle, Routes }

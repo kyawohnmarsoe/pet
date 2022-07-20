@@ -1,4 +1,4 @@
-import { Mail, MessageSquare, Grid, CheckSquare, Calendar, FileText, Circle, ShoppingCart, User } from 'react-feather'
+import { Mail, MessageSquare, Grid, CheckSquare, Calendar, FileText, Circle, ShoppingCart, User, Users } from 'react-feather'
 
 export default [
   {
@@ -17,21 +17,27 @@ export default [
     navLink: '/clinic/list'
   },
   {
-    id: 'chat',
-    title: 'Chat',
-    icon: <MessageSquare size={20} />,
-    navLink: '/apps/chat'
-  },
-  {
-    id: 'patients',
-    title: 'Patient',
-    icon: <User size={20} />,
-    navLink: '/apps/user/list'
-  },
-  {
-    id: 'branches',
-    title: 'Branch',
-    icon: <User size={20} />,
-    navLink: '/apps/branch/list'
+    id: 'subscription',
+    title: 'Subscription',
+    icon: <Grid size={20} />,
+    navLink: '/apps/subscription/pricing'
   }
+  // {
+  //   id: 'chat',
+  //   title: 'Chat',
+  //   icon: <MessageSquare size={20} />,
+  //   navLink: '/apps/chat'
+  // },
+  // {
+  //   id: 'patients',
+  //   title: 'Patient',
+  //   icon: <User size={20} />,
+  //   navLink: '/apps/user/list'
+  // },
+  // {
+  //   id: 'branches',
+  //   title: 'Branch',
+  //   icon: <User size={20} />,
+  //   navLink: '/apps/branch/list'
+  // }
 ]

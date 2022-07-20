@@ -114,6 +114,7 @@ const AppRoutes = [
     className: 'ecommerce-application',
     component: lazy(() => import('../../views/apps/ecommerce/shop'))
   },
+
   {
     path: '/apps/ecommerce/wishlist',
     className: 'ecommerce-application',
@@ -165,6 +166,23 @@ const AppRoutes = [
     component: lazy(() => import('../../views/apps/user/view')),
     meta: {
       navLink: '/apps/user/view'
+    }
+  },
+  {
+    path: '/apps/subscription/pricing',
+    className: 'ecommerce-application',
+    component: lazy(() => import('../../views/apps/subscription/pricing'))
+  },
+  {
+    path: '/apps/subscription/checkout',
+    className: 'ecommerce-application',
+    component: lazy(() => import('../../views/apps/subscription/checkout'))
+  },
+  {
+    path: '/apps/subscription/checkout/:id',
+    component: lazy(() => import('../../views/apps/subscription/checkout')),
+    meta: {
+      navLink: '/apps/subscription/checkout'
     }
   }
 ]

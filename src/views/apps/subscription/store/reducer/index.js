@@ -4,10 +4,11 @@ const initialState = {
   cart: [],
   productDetail: {},
   params: {},
-  totalProducts: 0
+  totalProducts: 0,
+  selectedPlan: null
 }
 
-const ecommerce = (state = initialState, action) => {
+const subscriptions = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_PRODUCTS':
       return { ...state, products: action.data.products, params: action.params, totalProducts: action.data.total }
@@ -25,9 +26,11 @@ const ecommerce = (state = initialState, action) => {
       return { ...state }
     case 'GET_PRODUCT':
       return { ...state, productDetail: action.data.product }
+      case 'GET_PLAN':
+        return { ...state, selectedPlan: action.selectedPlan }
     default:
       return state
   }
 }
 
-export default ecommerce
+export default subscriptions

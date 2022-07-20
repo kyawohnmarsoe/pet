@@ -20,6 +20,7 @@ import { Card, CardBody, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, A
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 import '@styles/react/libs/react-select/_react-select.scss'
+import { number } from 'prop-types'
 
 
 const ClinicEdit = () => {
@@ -34,6 +35,7 @@ const ClinicEdit = () => {
 
   // ** Function to get clinic on mount
   useEffect(() => {
+  
     dispatch(getClinic(parseInt(id)))
     return () => dispatch(getClinic(parseInt(0)))
   }, [dispatch, id])

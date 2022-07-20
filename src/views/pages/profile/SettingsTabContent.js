@@ -25,7 +25,6 @@ const SettingsTabContent = ({ data, setData }) => {
       }
     }
     console.log(newSettingInfo)
-
   }
 
   useEffect(() => {

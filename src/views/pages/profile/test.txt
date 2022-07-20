@@ -1,0 +1,47 @@
+const newData = {
+    accountInformation: {
+        dateofBirth: values.dateofBirth ? values.dateofBirth : data.accountInformation.dateofBirth,
+        email: values.email ? values.email : data.accountInformation.email,
+        firstName: values.firstName ? values.firstName : data.accountInformation.firstName,
+        gender: values.gender ? values.gender : data.accountInformation.gender,
+        id: values.id ? values.id : data.accountInformation.id,
+        identityExpirydate: values.identityExpirydate ? values.identityExpirydate : data.accountInformation.identityExpirydate,
+        identityNumber: values.identityNumber ? values.identityNumber : data.accountInformation.identityNumber,
+        lastName: values.lastName ? values.lastName : data.accountInformation.lastName,
+        mobileNumber: values.mobileNumber ? values.mobileNumber : data.accountInformation.mobileNumber,
+        preferedContactOptions: values.preferedContactOptions ? values.preferedContactOptions : data.accountInformation.preferedContactOptions,
+        primaryLanguage: values.primaryLanguage ? values.primaryLanguage : data.accountInformation.primaryLanguage,
+        status: values.status ? values.status : data.accountInformation.status,
+        subscriptionPlanId: values.subscriptionPlanId ? values.subscriptionPlanId : data.accountInformation.subscriptionPlanId,
+        userRoleId: values.userRoleId ? values.userRoleId : data.accountInformation.userRoleId,
+        websiteURL: values.websiteURL ? values.websiteURL : data.accountInformation.websiteURL
+    },
+    bankAccountInformation: {
+        accountHolderName: values.accountHolderName ? values.accountHolderName : data.bankAccountInformation.accountHolderName,
+        accountNumber: values.accountNumber ? values.accountNumber : data.bankAccountInformation.accountNumber,
+        bankName: values.bankName ? values.bankName : data.bankAccountInformation.bankName,
+        createdByUserID: values.createdByUserID ? values.createdByUserID : data.bankAccountInformation.createdByUserID,
+        createdByUserName: values.createdByUserName ? values.createdByUserName : data.bankAccountInformation.createdByUserName,
+        creationDate: values.creationDate ? values.creationDate : data.bankAccountInformation.creationDate,
+        iBAN: values.iBAN ? values.iBAN : data.bankAccountInformation.iBAN,
+        modificationDate: values.modificationDate ? values.modificationDate : data.bankAccountInformation.modificationDate,
+        petzolaCommisionPercent: values.petzolaCommisionPercent ? values.petzolaCommisionPercent : data.bankAccountInformation.petzolaCommisionPercent,
+        stripeAccountCreationDate: values.stripeAccountCreationDate ? values.stripeAccountCreationDate : data.bankAccountInformation.stripeAccountCreationDate,
+        stripeCustomerAccoundID: values.stripeCustomerAccoundID ? values.stripeCustomerAccoundID : data.bankAccountInformation.stripeCustomerAccoundID
+    },
+    businessProfile: {
+        addressLine1: values.addressLine1 ? values.addressLine1 : data.businessProfile.addressLine1,
+        addressLine2: values.addressLine2 ? values.addressLine2 : data.businessProfile.addressLine2,
+        city: values.city ? values.city : data.businessProfile.city,
+        companyName: values.companyName ? values.companyName : data.businessProfile.companyName,
+        companyNumber: values.companyNumber ? values.companyNumber : data.businessProfile.companyNumber,
+        companyTradeLicense: values.companyTradeLicense ? values.companyTradeLicense : data.businessProfile.companyTradeLicense,
+        companyType: values.companyType ? values.companyType : data.businessProfile.companyType,
+        country: values.country ? values.country : data.businessProfile.country,
+        currency: values.currency ? values.currency : data.businessProfile.currency,
+        postCode: values.postCode ? values.postCode : data.businessProfile.postCode,
+        state: values.state ? values.state : data.businessProfile.state,
+        timeZone: values.timeZone ? values.timeZone : data.businessProfile.timeZone
+
+    }
+}

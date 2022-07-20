@@ -15,6 +15,8 @@ import calendar from '@src/views/apps/calendar/store/reducer'
 import ecommerce from '@src/views/apps/ecommerce/store/reducer'
 import dataTables from '@src/views/tables/data-tables/store/reducer'
 import clinics from '@src/views/clinic/store/reducer'
+import subscriptions from '@src/views/apps/subscription/store/reducer'
+
 
 const rootReducer = combineReducers({
   auth,
@@ -23,7 +25,9 @@ const rootReducer = combineReducers({
   users,
   navbar,
   layout,
-  clinics
+  clinics,
+  subscriptions,
+  ecommerce
 })
 
 
