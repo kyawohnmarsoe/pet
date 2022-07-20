@@ -1,13 +1,10 @@
 import { Fragment, useState, useEffect } from 'react'
 import classnames from 'classnames'
 import { useForm, Controller } from 'react-hook-form'
-import Select, { components } from 'react-select'
-import { selectThemeColors } from '@utils'
 import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form, CustomInput } from 'reactstrap'
-import Flatpickr from 'react-flatpickr'
-import { User, MapPin } from 'react-feather'
-import Cleave from 'cleave.js/react'
 import 'cleave.js/dist/addons/cleave-phone.us'
+import Petzola from '../../../api/Petzola'
+
 
 const PayoutsTabContent = ({ data, setData }) => {
   const { register, errors, handleSubmit, control, setValue, trigger, reset } = useForm()
@@ -32,15 +29,24 @@ const PayoutsTabContent = ({ data, setData }) => {
       }
     }
     console.log(newBankInfo)
+    const updateCustomer = async () => {
+      const res = await Petzola.put('customer', { newBankInfo })
+      console.log(res)
+    }
+    
+    updateCustomer()
   }
 
   useEffect(() => {
     reset()
-    // console.log(data)
-
   }, [reset])
 
-  return (
+  // console.log(data)
+
+  if (data === null || data === undefined) {
+    return null
+  } else {
+    return (
     <Fragment>
 
       <Form className='mt-2' onSubmit={handleSubmit(onSubmit)}>
@@ -51,7 +57,7 @@ const PayoutsTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='accountHolderName'>Account Holder Name</Label>
               <Controller
-                defaultValue={data?.bankAccountInformation.accountHolderName}
+                defaultValue={data.bankAccountInformation.accountHolderName ? data.bankAccountInformation.accountHolderName : ""}
                 control={control}
                 as={Input}
                 name='accountHolderName'
@@ -67,7 +73,7 @@ const PayoutsTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='petzolaCommisionPercent'>Petzola Commision %</Label>
               <Controller
-                defaultValue={data?.bankAccountInformation.petzolaCommisionPercent}
+                defaultValue={data.bankAccountInformation.petzolaCommisionPercent ? data.bankAccountInformation.petzolaCommisionPercent : ""}
                 control={control}
                 as={Input}
                 name='petzolaCommisionPercent'
@@ -76,21 +82,20 @@ const PayoutsTabContent = ({ data, setData }) => {
                 className={classnames({
                   'is-invalid': errors.petzolaCommisionPercent
                 })}
-                disabled
               />
             </FormGroup>
           </Col>
           <Col sm='6' md='4'>
             <FormGroup>
               <Label for='firstname'>Current Plan</Label>
-              <div className='row m-0'>{data?.accountInformation.subscriptionPlanId} - {data?.accountInformation.subscriptionPlanId} <span className='ml-auto'><a href="#"> Change</a></span></div>
+              <div className='row m-0'>{data.accountInformation.subscriptionPlanId ? data.accountInformation.subscriptionPlanId : ""} - {data.accountInformation.subscriptionPlanId ? data.accountInformation.subscriptionPlanId : ""} <span className='ml-auto'><a href="#"> Change</a></span></div>
             </FormGroup>
           </Col>
           <Col sm='6' md='4'>
             <FormGroup>
               <Label for='bankName'>Bank Name</Label>
               <Controller
-                defaultValue={data?.bankAccountInformation.bankName}
+                defaultValue={data.bankAccountInformation.bankName ? data.bankAccountInformation.bankName : ""}
                 control={control}
                 as={Input}
                 id='bankName'
@@ -107,7 +112,7 @@ const PayoutsTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='iBAN'>IBAN</Label>
               <Controller
-                defaultValue={data?.bankAccountInformation.iBAN}
+                defaultValue={data.bankAccountInformation.iBAN ? data.bankAccountInformation.iBAN : "" }
                 control={control}
                 as={Input}
                 id='iBAN'
@@ -124,7 +129,7 @@ const PayoutsTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='petzolaCommisionPercent'>Petzola Commision %</Label>
               <Controller
-                defaultValue={data?.bankAccountInformation.petzolaCommisionPercent}
+                defaultValue={data.bankAccountInformation.petzolaCommisionPercent ? data.bankAccountInformation.petzolaCommisionPercent : ""}
                 control={control}
                 as={Input}
                 name='petzolaCommisionPercent'
@@ -133,7 +138,6 @@ const PayoutsTabContent = ({ data, setData }) => {
                 className={classnames({
                   'is-invalid': errors.petzolaCommisionPercent
                 })}
-                disabled
               />
             </FormGroup>
           </Col>
@@ -153,6 +157,7 @@ const PayoutsTabContent = ({ data, setData }) => {
       </Form>
     </Fragment>
   )
+}
 }
 
 export default PayoutsTabContent

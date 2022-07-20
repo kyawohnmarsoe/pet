@@ -7,7 +7,6 @@ import Breadcrumbs from '@components/breadcrumbs'
 import PayoutsTabContent from './PayoutsTabContent'
 import AccountTabContent from './AccountTabContent'
 import BusinessTabContent from './BusinessTabContent'
-import NotificationsTabContent from './NotificationsTabContent'
 import { Row, Col, TabContent, TabPane, Card, CardBody } from 'reactstrap'
 import UILoader from '@components/ui-loader'
 
@@ -25,22 +24,23 @@ const Profile = () => {
     setActiveTab(tab)
   }
 
-  const getCustomerInfo = async () => {
-    const getCustomerId = async () => {
+   const getCustomerId = async () => {
       const res = await axios.get(`${endPints.baseUrl}/user`)
       setCustomerId(res.data.data.id)
-      console.log(customerId)
     }
+
+  const getCustomerInfo = useCallback(async () => {
     const res = await Petzola.post('customer/search', { customerId })
       setData(res.data.data[0])
-      console.log(data)
-  }
+  }, [customerId])
 
 useEffect(() => {
   // axios.get(`/api/customer/profile/data`).then(response => setData(response.data))
+  getCustomerId()
   getCustomerInfo()
+}, [customerId, data])
 
-}, [])
+// console.log(data)
 
 return (
   <Fragment>
@@ -59,10 +59,14 @@ return (
                 <CardBody>
                   <TabContent activeTab={activeTab}>
                     <TabPane tabId='1'>
+                      <ErrorBoundary>
                       <AccountTabContent data={data} setData={setData} />
+                      </ErrorBoundary>
                     </TabPane>
                     <TabPane tabId='2'>
+                    <ErrorBoundary>
                       <BusinessTabContent data={data} setData={setData} />
+                      </ErrorBoundary>
                     </TabPane>
                     <TabPane tabId='3'>
                       <ErrorBoundary>
@@ -73,9 +77,6 @@ return (
                       <ErrorBoundary>
                         <PayoutsTabContent data={data} setData={setData} />
                       </ErrorBoundary>
-                    </TabPane>
-                    <TabPane tabId='5'>
-                      {/* <NotificationsTabContent data={data} /> */}
                     </TabPane>
                   </TabContent>
                 </CardBody>

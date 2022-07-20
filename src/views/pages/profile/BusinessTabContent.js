@@ -1,13 +1,10 @@
 import { Fragment, useState, useEffect } from 'react'
 import classnames from 'classnames'
 import { useForm, Controller } from 'react-hook-form'
-import Select, { components } from 'react-select'
-import { selectThemeColors } from '@utils'
 import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form, CustomInput } from 'reactstrap'
-import Flatpickr from 'react-flatpickr'
-import { User, MapPin } from 'react-feather'
-import Cleave from 'cleave.js/react'
-import 'cleave.js/dist/addons/cleave-phone.us'
+import { MapPin } from 'react-feather'
+import Petzola from '../../../api/Petzola'
+
 
 const BusinessTabContent = ({ data, setData }) => {
 
@@ -35,16 +32,25 @@ const BusinessTabContent = ({ data, setData }) => {
     }
     console.log(newBusinessInfo)
 
+    const updateCustomer = async () => {
+      const res = await Petzola.put('customer', { newBusinessInfo })
+      console.log(res)
+    }
+    
+    updateCustomer()
   }
 
   useEffect(() => {
     reset()
-    // console.log(data)
   }, [reset])
 
-  return (
-    <Fragment>
+  // console.log(data)
 
+  if (data === null || data === undefined) {
+    return null
+  } else {
+    return (
+    <Fragment>
       <Form className='mt-2' onSubmit={handleSubmit(onSubmit)}>
         <Row>
           <Col sm='6' md='4'>
@@ -52,11 +58,11 @@ const BusinessTabContent = ({ data, setData }) => {
               <Label for='companyName'>Company Name</Label>
 
               <Controller
-                defaultValue={data?.businessProfile.companyName}
                 control={control}
                 as={Input}
                 id='companyName'
                 name='companyName'
+                defaultValue={data.businessProfile.companyName ? data.businessProfile.companyName : ""}
                 innerRef={register({ required: true })}
                 onChange={e => setValue('companyName', e.target.value)}
                 className={classnames({
@@ -69,17 +75,16 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='companyNumber'>Phone</Label>
               <Controller
-                as={Cleave}
-                control={control}
-                id='companyNumber'
-                name='companyNumber'
-                defaultValue={data?.businessProfile.companyNumber}
-                placeholder='1 234 567 8900'
-                options={{ phone: true, phoneRegionCode: 'US' }}
-                className={classnames('form-control', {
-                  'is-invalid': data !== null && (data?.businessProfile.companyNumber === undefined || data?.businessProfile.companyNumber === null)
-                })}
-              />
+                    defaultValue={data.businessProfile.companyNumber ? data.businessProfile.companyNumber : ""}
+                    control={control}
+                    as={Input}
+                    name='companyNumber'
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('companyNumber', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.companyNumber
+                    })}
+                  />
             </FormGroup>
           </Col>
 
@@ -92,9 +97,8 @@ const BusinessTabContent = ({ data, setData }) => {
                 name='companyType'
                 id='companyType'
                 control={control}
-                defaultValue={data?.businessProfile.companyType}
-                invalid={data !== null && (data.businessProfile.companyType === undefined || data.businessProfile.companyType === null)}
-              >
+                defaultValue={data.businessProfile.companyType ? data.businessProfile.companyType : "CLINIC"}
+               >
                 <option value='CLINIC'>CLINIC</option>
                 <option value='STORE'>STORE</option>
                 <option value='SPA'>SPA</option>
@@ -107,7 +111,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='companyTradeLicense'>License Number</Label>
               <Controller
-                defaultValue={data.businessProfile.companyTradeLicense}
+                defaultValue={data.businessProfile.companyTradeLicense ? data.businessProfile.companyTradeLicense : null }
                 control={control}
                 as={Input}
                 id='companyTradeLicense'
@@ -134,7 +138,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='addressLine1'>Address Line 1</Label>
               <Controller
-                defaultValue={data?.businessProfile.addressLine1}
+                defaultValue={data.businessProfile.addressLine1 ? data.businessProfile.addressLine1 : ""}
                 control={control}
                 as={Input}
                 id='addressLine1'
@@ -151,7 +155,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='addressLine2'>Address Line 2</Label>
               <Controller
-                defaultValue={data?.businessProfile.addressLine2}
+                defaultValue={data.businessProfile.addressLine2 ? data.businessProfile.addressLine2 : ""}
                 control={control}
                 as={Input}
                 id='addressLine2'
@@ -168,7 +172,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='postcode'>Postcode</Label>
               <Controller
-                defaultValue={data?.businessProfile.postCode}
+                defaultValue={data.businessProfile.postCode ? data.businessProfile.postCode : null }
                 control={control}
                 as={Input}
                 id='postCode'
@@ -185,7 +189,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='city'>City</Label>
               <Controller
-                defaultValue={data?.businessProfile.city}
+                defaultValue={data.businessProfile.city ? data.businessProfile.city : ""}
                 control={control}
                 as={Input}
                 id='city'
@@ -202,7 +206,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='state'>State</Label>
               <Controller
-                defaultValue={data?.businessProfile.state}
+                defaultValue={data.businessProfile.state ? data.businessProfile.state : ""}
                 control={control}
                 as={Input}
                 id='state'
@@ -219,7 +223,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='country'>Country</Label>
               <Controller
-                defaultValue={data?.businessProfile.country}
+                defaultValue={data.businessProfile.country ? data.businessProfile.country : ""}
                 control={control}
                 as={Input}
                 id='country'
@@ -246,7 +250,8 @@ const BusinessTabContent = ({ data, setData }) => {
         </Row>
       </Form>
     </Fragment>
-  )
+    )
+  }
 }
 
 export default BusinessTabContent

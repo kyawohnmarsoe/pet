@@ -1,16 +1,13 @@
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Fragment, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import classnames from 'classnames'
 import { useForm, Controller } from 'react-hook-form'
-import Select, { components } from 'react-select'
-import { selectThemeColors } from '@utils'
 import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form, CustomInput, FormFeedback } from 'reactstrap'
 import Flatpickr from 'react-flatpickr'
-import { User, MapPin, Edit, Trash2 } from 'react-feather'
-import Cleave from 'cleave.js/react'
-import 'cleave.js/dist/addons/cleave-phone.us'
+import { User, Edit, Trash2 } from 'react-feather'
 import Avatar from '@components/avatar'
+import Petzola from '../../../api/Petzola'
 
 
 // ** Default Avatar Image
@@ -43,6 +40,8 @@ const AccountTabContent = ({ data, setData }) => {
 
   // const onSubmit = data => trigger()
 
+  
+
   const onSubmit = values => {
     const newAccountInfo = {
       ...data,
@@ -67,12 +66,23 @@ const AccountTabContent = ({ data, setData }) => {
     }
 
     console.log(newAccountInfo)
+
+    // Petzola.put('customer', { newAccountInfo }).then(res => {
+    //   console.log(res.data)
+    // })
+    const updateCustomer = async () => {
+      const res = await Petzola.put('customer', { newAccountInfo })
+      console.log(res)
+    }
+    
+    updateCustomer()
   }
 
   useEffect(() => {
     reset()
-    console.log(data)
   }, [reset])
+
+  // console.log(data)
 
   // ** Renders User
   const renderUserAvatar = () => {
@@ -85,7 +95,7 @@ const AccountTabContent = ({ data, setData }) => {
           initials
           color={color}
           className='rounded mr-2 my-25'
-          content={data.accountInformation.firstName}
+          content={data.accountInformation.firstName ? data.accountInformation.firstName : ""}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -120,7 +130,7 @@ const AccountTabContent = ({ data, setData }) => {
           <Media className='mb-2'>
             {/* {renderUserAvatar()} */}
             <Media className='mt-50' body>
-              <h4>{data.accountInformation.firstName} {data.accountInformation.lastName}</h4>
+              <h4>{data.accountInformation.firstName ? data.accountInformation.firstName : ""} {data.accountInformation.lastName ? data.accountInformation.lastName : ""}</h4>
               <div className='d-flex flex-wrap mt-1 px-0'>
                 <Button.Ripple id='change-img' tag={Label} className='mr-75 mb-0' color='primary'>
                   <span className='d-none d-sm-block'>Change</span>
@@ -148,7 +158,7 @@ const AccountTabContent = ({ data, setData }) => {
                 <FormGroup>
                   <Label for='firstName'>First Name<span className='text-danger'>*</span></Label>
                   <Controller
-                    defaultValue={data?.accountInformation.firstName}
+                    defaultValue={data.accountInformation.firstName ? data.accountInformation.firstName : ""}
                     control={control}
                     as={Input}
                     name='firstName'
@@ -166,7 +176,7 @@ const AccountTabContent = ({ data, setData }) => {
                 <FormGroup>
                   <Label for='lastName'>Last Name<span className='text-danger'>*</span></Label>
                   <Controller
-                    defaultValue={data?.accountInformation.lastName}
+                    defaultValue={data.accountInformation.lastName ? data.accountInformation.lastName : ""}
                     control={control}
                     as={Input}
                     name='lastName'
@@ -184,8 +194,8 @@ const AccountTabContent = ({ data, setData }) => {
                 <FormGroup>
                   <Label for='email'>Email<span className='text-danger'>*</span></Label>
                   <Controller
-                    defaultValue={data?.accountInformation.email}
-                    value={data?.accountInformation.email}
+                    defaultValue={data.accountInformation.email ? data.accountInformation.email : ""}
+                    value={data.accountInformation.email ? data.accountInformation.email : ""}
                     control={control}
                     as={Input}
                     type='email'
@@ -205,10 +215,10 @@ const AccountTabContent = ({ data, setData }) => {
                   <Label for='status'>Status</Label>
                   <Controller
                     as={Input}
-                    type='select'
+                    type='select' 
                     name='status'
                     control={control}
-                    defaultValue={data?.accountInformation.status}
+                    defaultValue={data.accountInformation.status ? data.accountInformation.status : "Active"}
                     invalid={data !== null && (data.accountInformation.status === undefined || data.accountInformation.status === null)}
                   >
                     <option value='Active'>Active</option>
@@ -224,7 +234,7 @@ const AccountTabContent = ({ data, setData }) => {
                     type='select'
                     name='userRoleId'
                     control={control}
-                    defaultValue={data?.accountInformation.userRoleId}
+                    defaultValue={data.accountInformation.userRoleId ? data.accountInformation.userRoleId : "ADMIN"}
                     invalid={data !== null && (data.accountInformation.userRoleId === undefined || data.accountInformation.userRoleId === null)}
                   >
                     <option value='ADMIN'>ADMIN</option>
@@ -249,7 +259,7 @@ const AccountTabContent = ({ data, setData }) => {
                     Birth Date
                   </Label>
                   <Controller
-                    defaultValue={data?.accountInformation.dateofBirth}
+                    defaultValue={data.accountInformation.dateofBirth ? data.accountInformation.dateofBirth : ""}
                     name='dateofBirth'
                     as={Flatpickr}
                     control={control}
@@ -265,17 +275,19 @@ const AccountTabContent = ({ data, setData }) => {
               <Col sm='6' md='4'>
                 <FormGroup>
                   <Label for='mobileNumber'>Mobile</Label>
+
                   <Controller
-                    as={Cleave}
+                    defaultValue={data.accountInformation.mobileNumber ? data.accountInformation.mobileNumber : ""}
                     control={control}
+                    as={Input}
                     name='mobileNumber'
-                    defaultValue={data?.accountInformation.mobileNumber}
-                    placeholder='1 234 567 8900'
-                    options={{ phone: true, phoneRegionCode: 'US' }}
-                    className={classnames('form-control', {
-                      'is-invalid': data !== null && (data.accountInformation.mobileNumber === undefined || data.accountInformation.mobileNumber === null)
+                    innerRef={register({ required: true })}
+                    onChange={e => setValue('mobileNumber', e.target.value)}
+                    className={classnames({
+                      'is-invalid': errors.mobileNumber
                     })}
                   />
+                  {errors && errors.mobileNumber && <FormFeedback>{errors.mobileNumber.message}</FormFeedback>}
 
                 </FormGroup>
               </Col>
@@ -286,7 +298,7 @@ const AccountTabContent = ({ data, setData }) => {
                     type='text'
                     name='websiteURL'
                     placeholder='https://google.com'
-                    defaultValue={data?.accountInformation.websiteURL}
+                    defaultValue={data.accountInformation.websiteURL ? data.accountInformation.websiteURL : ""}
                   />
                 </FormGroup>
               </Col>
@@ -298,8 +310,8 @@ const AccountTabContent = ({ data, setData }) => {
                     type='select'
                     name='primaryLanguage'
                     control={control}
-                    defaultValue={data?.accountInformation.primaryLanguage}
-                    invalid={data !== null && (data.accountInformation.primaryLanguage === undefined || data.accountInformation.primaryLanguage === null)}
+                    defaultValue={data.accountInformation.primaryLanguage ? data.accountInformation.primaryLanguage : "English"}
+                    
                   >
                     <option value='English'>English</option>
                     <option value='Spanish'>Spanish</option>
@@ -316,25 +328,27 @@ const AccountTabContent = ({ data, setData }) => {
                   <label className='d-block mb-1'>Gender</label>
                   <FormGroup>
                     <Controller
-                      defaultValue={data?.accountInformation.gender}
+                      defaultValue={data.accountInformation.gender ? data.accountInformation.gender : "Male"}
                       name='gender'
                       control={control}
                       render={props => {
                         return (
                           <CustomInput
+                          defaultChecked
                             inline
                             type='radio'
                             label='Male'
                             value='Male'
                             id='gender-male'
                             name={props.name}
-                            invalid={data !== null && (data.accountInformation.gender === undefined || data.accountInformation.gender === null)}
+                           
                             onChange={() => setValue('gender', 'male')}
                           />
                         )
                       }}
                     />
                     <Controller
+                     defaultValue={data.accountInformation.gender ? data.accountInformation.gender : "Female"}
                       name='gender'
                       control={control}
                       render={props => {
@@ -346,7 +360,7 @@ const AccountTabContent = ({ data, setData }) => {
                             value='Female'
                             id='gender-female'
                             name={props.name}
-                            invalid={data !== null && (data.accountInformation.gender === undefined || data.accountInformation.gender === null)}
+                           
                             onChange={() => setValue('gender', 'female')}
                           />
                         )
@@ -397,7 +411,7 @@ const AccountTabContent = ({ data, setData }) => {
                 <FormGroup>
                   <Label for='identityNumber'>Identity ID</Label>
                   <Controller
-                    defaultValue={data?.accountInformation.identityNumber}
+                    defaultValue={data.accountInformation.identityNumber ? data.accountInformation.identityNumber : ""}
                     control={control}
                     as={Input}
                     name='identityNumber'
@@ -412,7 +426,7 @@ const AccountTabContent = ({ data, setData }) => {
                     Expiry Date
                   </Label>
                   <Controller
-                    defaultValue={data?.accountInformation.identityExpirydate}
+                    defaultValue={data.accountInformation.identityExpirydate ? data.accountInformation.identityExpirydate : ""}
                     id='identityExpirydate'
                     name='identityExpirydate'
                     as={Flatpickr}

@@ -1,13 +1,9 @@
 import { Fragment, useState, useEffect } from 'react'
-import classnames from 'classnames'
 import { useForm, Controller } from 'react-hook-form'
-import Select, { components } from 'react-select'
-import { selectThemeColors } from '@utils'
-import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form, CustomInput } from 'reactstrap'
-import Flatpickr from 'react-flatpickr'
-import { User, MapPin } from 'react-feather'
-import Cleave from 'cleave.js/react'
+import { Button, Media, Label, Row, Col, Input, FormGroup, Form } from 'reactstrap'
 import 'cleave.js/dist/addons/cleave-phone.us'
+import Petzola from '../../../api/Petzola'
+
 
 const SettingsTabContent = ({ data, setData }) => {
 
@@ -25,14 +21,24 @@ const SettingsTabContent = ({ data, setData }) => {
       }
     }
     console.log(newSettingInfo)
+    const updateCustomer = async () => {
+      const res = await Petzola.put('customer', { newSettingInfo })
+      console.log(res)
+    }
+    
+    updateCustomer()
   }
 
   useEffect(() => {
     reset()
-    // console.log(data)
   }, [reset])
 
-  return (
+  // console.log(data)
+  
+  if (data === null || data === undefined) {
+    return null
+  } else {
+    return (
     <Fragment>
 
       <Form className='mt-2' onSubmit={handleSubmit(onSubmit)}>
@@ -46,9 +52,8 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='currency'
                 id='currency'
                 control={control}
-                defaultValue={data?.businessProfile.currency}
-                invalid={data !== null && (data.businessProfile.currency === undefined || data.businessProfile.currency === null)}
-              >
+                defaultValue={data.businessProfile.currency ? data.businessProfile.currency : "AED"}
+                 >
                 <option value='AED'>AED</option>
                 <option value='USD'>USD</option>
                 <option value='SGD'>SGD</option>
@@ -65,9 +70,8 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='timeZone'
                 id='timeZone'
                 control={control}
-                defaultValue={data?.businessProfile.timeZone}
-                invalid={data !== null && (data.businessProfile.timeZone === undefined || data.businessProfile.timeZone === null)}
-              >
+                defaultValue={data.businessProfile.timeZone ? data.businessProfile.timeZone : "Dubai"}
+                  >
                 <option value='Dubai'>Dubai</option>
                 <option value='US'>US</option>
                 <option value='Asia'>Asia</option>
@@ -84,9 +88,8 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='timeZone'
                 id='timeZone1'
                 control={control}
-                defaultValue={data?.businessProfile.timeZone}
-                invalid={data !== null && (data.businessProfile.timeZone === undefined || data.businessProfile.timeZone === null)}
-              >
+                defaultValue={data.businessProfile.timeZone ? data.businessProfile.timeZone : "10 Minitues"}
+                >
                 <option value='10 Minitues'>10 Minitues</option>
                 <option value='20 Minitues'>20 Minitues</option>
                 <option value='30 Minitues'>30 Minitues</option>
@@ -103,9 +106,8 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='timeZone'
                 id='timeZone2'
                 control={control}
-                defaultValue={data?.businessProfile.timeZone}
-                invalid={data !== null && (data.businessProfile.timeZone === undefined || data.businessProfile.timeZone === null)}
-              >
+                defaultValue={data.businessProfile.timeZone ? data.businessProfile.timeZone : "10 Minitues"}
+                >
                 <option value='10 Minitues'>10 Minitues</option>
                 <option value='20 Minitues'>20 Minitues</option>
                 <option value='30 Minitues'>30 Minitues</option>
@@ -122,9 +124,8 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='timeZone'
                 id='timeZone3'
                 control={control}
-                defaultValue={data?.businessProfile.timeZone}
-                invalid={data !== null && (data.businessProfile.timeZone === undefined || data.businessProfile.timeZone === null)}
-              >
+                defaultValue={data.businessProfile.timeZone ? data.businessProfile.timeZone : "10 Minitues"}
+                >
                 <option value='10 Minitues'>10 Minitues</option>
                 <option value='20 Minitues'>20 Minitues</option>
                 <option value='30 Minitues'>30 Minitues</option>
@@ -147,6 +148,7 @@ const SettingsTabContent = ({ data, setData }) => {
       </Form>
     </Fragment>
   )
+}
 }
 
 export default SettingsTabContent
