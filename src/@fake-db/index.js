@@ -21,5 +21,7 @@ import './jwt'
 import './clinics/clinicsList'
 import './pages/customer'
 import './apps/subscription'
+import './operators/operatorsList'
+import './service/offerList'
 
 mock.onAny().passThrough()

@@ -16,7 +16,8 @@ import ecommerce from '@src/views/apps/ecommerce/store/reducer'
 import dataTables from '@src/views/tables/data-tables/store/reducer'
 import clinics from '@src/views/clinic/store/reducer'
 import subscriptions from '@src/views/apps/subscription/store/reducer'
-
+import operators from '@src/views/operator/store/reducer'
+import offers from '../../views/service-offers/store/reducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -27,8 +28,8 @@ const rootReducer = combineReducers({
   layout,
   clinics,
   subscriptions,
-  ecommerce
+  ecommerce,
+  operators
 })
-
 
 export default rootReducer

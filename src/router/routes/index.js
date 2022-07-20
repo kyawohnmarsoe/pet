@@ -9,8 +9,9 @@ import UiElementRoutes from './UiElements'
 import ExtensionsRoutes from './Extensions'
 import PageLayoutsRoutes from './PageLayouts'
 import ClinicsRoutes from './Clinics'
-// import OperatorsRoutes from './Operators'
-// import SubscriptionRoutes from './Subscription'
+import OperatorsRoutes from './Operators'
+import ServiceOffersRoutes from './ServiceOffers'
+
 
 // ** Document title
 const TemplateTitle = '%s - Vuexy React Admin Template'
@@ -29,9 +30,9 @@ const Routes = [
   ...FormRoutes,
   ...TablesRoutes,
   ...ChartMapsRoutes,
-  ...ClinicsRoutes
-  // ...OperatorsRoutes
-  // ...SubscriptionRoutes
+  ...ClinicsRoutes,
+  ...OperatorsRoutes,
+  ...ServiceOffersRoutes
 ]
 
 export { DefaultRoute, TemplateTitle, Routes }

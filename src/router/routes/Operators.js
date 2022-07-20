@@ -27,7 +27,13 @@ const OperatorsRoutes = [
     path: '/operator/view/:id',
     component: lazy(() => import('../../views/operator/view')),
     meta: {
-      navLink: '/operator/view'
+      navLink: '/operator/view'}
+    },
+    {
+      path: '/clinic/view/:id',
+    component: lazy(() => import('../../views/operator/list')),
+    meta: {
+      navLink: '/clinic/view'
     }
   },
   {
@@ -36,7 +42,6 @@ const OperatorsRoutes = [
     meta: {
       navLink: '/operator/workdays/edit'
     }
-
   },
   {
     path: '/operator/create',

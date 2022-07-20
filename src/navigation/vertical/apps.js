@@ -21,7 +21,37 @@ export default [
     title: 'Subscription',
     icon: <Grid size={20} />,
     navLink: '/apps/subscription/pricing'
+},
+{
+    id: 'opertors',
+    title: 'operators',
+    icon: <Grid size={20} />,
+    navLink: '/operator/list'
+  },
+  {
+    id: 'serviceOffers',
+    title: 'Service Offers',
+    icon: <Grid size={20} />,
+    navLink: '/service-offer/list'
   }
+  // {
+  //   id: 'chat',
+  //   title: 'Chat',
+  //   icon: <MessageSquare size={20} />,
+  //   navLink: '/apps/chat'
+  // },
+  // {
+  //   id: 'patients',
+  //   title: 'Patient',
+  //   icon: <User size={20} />,
+  //   navLink: '/apps/user/list'
+  // },
+  // {
+  //   id: 'branches',
+  //   title: 'Branch',
+  //   icon: <User size={20} />,
+  //   navLink: '/apps/branch/list'
+  // }
   // {
   //   id: 'chat',
   //   title: 'Chat',
