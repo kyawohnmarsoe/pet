@@ -52,7 +52,7 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='currency'
                 id='currency'
                 control={control}
-                defaultValue={data.businessProfile.currency ? data.businessProfile.currency : "AED"}
+                defaultValue={(data.businessProfile.currency === null || data.businessProfile.currency === undefined) ? "AED" : data.businessProfile.currency}
                  >
                 <option value='AED'>AED</option>
                 <option value='USD'>USD</option>
@@ -70,7 +70,7 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='timeZone'
                 id='timeZone'
                 control={control}
-                defaultValue={data.businessProfile.timeZone ? data.businessProfile.timeZone : "Dubai"}
+                defaultValue={(data.businessProfile.timeZone === null || data.businessProfile.timeZone === undefined) ? "Dubai" : data.businessProfile.timeZone}
                   >
                 <option value='Dubai'>Dubai</option>
                 <option value='US'>US</option>
@@ -88,7 +88,7 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='timeZone'
                 id='timeZone1'
                 control={control}
-                defaultValue={data.businessProfile.timeZone ? data.businessProfile.timeZone : "10 Minitues"}
+                defaultValue={(data.businessProfile.timeZone === null || data.businessProfile.timeZone === undefined) ? "10 Minitues" : data.businessProfile.timeZone}
                 >
                 <option value='10 Minitues'>10 Minitues</option>
                 <option value='20 Minitues'>20 Minitues</option>
@@ -106,7 +106,7 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='timeZone'
                 id='timeZone2'
                 control={control}
-                defaultValue={data.businessProfile.timeZone ? data.businessProfile.timeZone : "10 Minitues"}
+                defaultValue={(data.businessProfile.timeZone === null || data.businessProfile.timeZone === undefined) ? "10 Minitues" : data.businessProfile.timeZone}
                 >
                 <option value='10 Minitues'>10 Minitues</option>
                 <option value='20 Minitues'>20 Minitues</option>
@@ -124,7 +124,7 @@ const SettingsTabContent = ({ data, setData }) => {
                 name='timeZone'
                 id='timeZone3'
                 control={control}
-                defaultValue={data.businessProfile.timeZone ? data.businessProfile.timeZone : "10 Minitues"}
+                defaultValue={(data.businessProfile.timeZone === null || data.businessProfile.timeZone === undefined) ? "10 Minitues" : data.businessProfile.timeZone}
                 >
                 <option value='10 Minitues'>10 Minitues</option>
                 <option value='20 Minitues'>20 Minitues</option>

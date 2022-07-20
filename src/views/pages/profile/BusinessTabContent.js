@@ -62,7 +62,7 @@ const BusinessTabContent = ({ data, setData }) => {
                 as={Input}
                 id='companyName'
                 name='companyName'
-                defaultValue={data.businessProfile.companyName ? data.businessProfile.companyName : ""}
+                defaultValue={(data.businessProfile.companyName === null || data.businessProfile.companyName === undefined) ? "" : data.businessProfile.companyName}
                 innerRef={register({ required: true })}
                 onChange={e => setValue('companyName', e.target.value)}
                 className={classnames({
@@ -75,7 +75,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='companyNumber'>Phone</Label>
               <Controller
-                    defaultValue={data.businessProfile.companyNumber ? data.businessProfile.companyNumber : ""}
+                    defaultValue={(data.businessProfile.companyNumber === null || data.businessProfile.companyNumber === undefined) ? "" : data.businessProfile.companyNumber}
                     control={control}
                     as={Input}
                     name='companyNumber'
@@ -97,7 +97,7 @@ const BusinessTabContent = ({ data, setData }) => {
                 name='companyType'
                 id='companyType'
                 control={control}
-                defaultValue={data.businessProfile.companyType ? data.businessProfile.companyType : "CLINIC"}
+                defaultValue={(data.businessProfile.companyType === null || data.businessProfile.companyType === undefined) ? "CLINIC" : data.businessProfile.companyType}
                >
                 <option value='CLINIC'>CLINIC</option>
                 <option value='STORE'>STORE</option>
@@ -111,7 +111,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='companyTradeLicense'>License Number</Label>
               <Controller
-                defaultValue={data.businessProfile.companyTradeLicense ? data.businessProfile.companyTradeLicense : null }
+                defaultValue={(data.businessProfile.companyTradeLicense === null || data.businessProfile.companyTradeLicense === undefined) ? "" : data.businessProfile.companyTradeLicense}
                 control={control}
                 as={Input}
                 id='companyTradeLicense'
@@ -138,7 +138,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='addressLine1'>Address Line 1</Label>
               <Controller
-                defaultValue={data.businessProfile.addressLine1 ? data.businessProfile.addressLine1 : ""}
+                defaultValue={(data.businessProfile.addressLine1 === null || data.businessProfile.addressLine1 === undefined) ? "" : data.businessProfile.addressLine1}
                 control={control}
                 as={Input}
                 id='addressLine1'
@@ -155,7 +155,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='addressLine2'>Address Line 2</Label>
               <Controller
-                defaultValue={data.businessProfile.addressLine2 ? data.businessProfile.addressLine2 : ""}
+                defaultValue={(data.businessProfile.addressLine2 === null || data.businessProfile.addressLine2 === undefined) ? "" : data.businessProfile.addressLine2}
                 control={control}
                 as={Input}
                 id='addressLine2'
@@ -172,7 +172,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='postcode'>Postcode</Label>
               <Controller
-                defaultValue={data.businessProfile.postCode ? data.businessProfile.postCode : null }
+                defaultValue={(data.businessProfile.postCode === null || data.businessProfile.postCode === undefined) ? "" : data.businessProfile.postCode}
                 control={control}
                 as={Input}
                 id='postCode'
@@ -189,7 +189,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='city'>City</Label>
               <Controller
-                defaultValue={data.businessProfile.city ? data.businessProfile.city : ""}
+                defaultValue={(data.businessProfile.city === null || data.businessProfile.city === undefined) ? "" : data.businessProfile.city}
                 control={control}
                 as={Input}
                 id='city'
@@ -206,7 +206,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='state'>State</Label>
               <Controller
-                defaultValue={data.businessProfile.state ? data.businessProfile.state : ""}
+                defaultValue={(data.businessProfile.state === null || data.businessProfile.state === undefined) ? "" : data.businessProfile.state}
                 control={control}
                 as={Input}
                 id='state'
@@ -223,7 +223,7 @@ const BusinessTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='country'>Country</Label>
               <Controller
-                defaultValue={data.businessProfile.country ? data.businessProfile.country : ""}
+                defaultValue={(data.businessProfile.country === null || data.businessProfile.country === undefined) ? "" : data.businessProfile.country}
                 control={control}
                 as={Input}
                 id='country'

@@ -40,8 +40,6 @@ const AccountTabContent = ({ data, setData }) => {
 
   // const onSubmit = data => trigger()
 
-  
-
   const onSubmit = values => {
     const newAccountInfo = {
       ...data,
@@ -86,6 +84,7 @@ const AccountTabContent = ({ data, setData }) => {
 
   // ** Renders User
   const renderUserAvatar = () => {
+   
     if (img === null) {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
@@ -158,7 +157,7 @@ const AccountTabContent = ({ data, setData }) => {
                 <FormGroup>
                   <Label for='firstName'>First Name<span className='text-danger'>*</span></Label>
                   <Controller
-                    defaultValue={data.accountInformation.firstName ? data.accountInformation.firstName : ""}
+                    defaultValue={(data.accountInformation.firstName === null || data.accountInformation.firstName === undefined) ? "" : data.accountInformation.firstName}
                     control={control}
                     as={Input}
                     name='firstName'
@@ -176,7 +175,7 @@ const AccountTabContent = ({ data, setData }) => {
                 <FormGroup>
                   <Label for='lastName'>Last Name<span className='text-danger'>*</span></Label>
                   <Controller
-                    defaultValue={data.accountInformation.lastName ? data.accountInformation.lastName : ""}
+                    defaultValue={(data.accountInformation.lastName === null || data.accountInformation.lastName === undefined) ? "" : data.accountInformation.lastName }
                     control={control}
                     as={Input}
                     name='lastName'
@@ -194,8 +193,8 @@ const AccountTabContent = ({ data, setData }) => {
                 <FormGroup>
                   <Label for='email'>Email<span className='text-danger'>*</span></Label>
                   <Controller
-                    defaultValue={data.accountInformation.email ? data.accountInformation.email : ""}
-                    value={data.accountInformation.email ? data.accountInformation.email : ""}
+                    defaultValue={(data.accountInformation.email === null || data.accountInformation.email === undefined) ? "" : data.accountInformation.email}
+                    value={(data.accountInformation.email === null || data.accountInformation.email === undefined) ? "" : data.accountInformation.email}
                     control={control}
                     as={Input}
                     type='email'
@@ -218,7 +217,7 @@ const AccountTabContent = ({ data, setData }) => {
                     type='select' 
                     name='status'
                     control={control}
-                    defaultValue={data.accountInformation.status ? data.accountInformation.status : "Active"}
+                    defaultValue={(data.accountInformation.status === null || data.accountInformation.status === undefined) ? "Active" : data.accountInformation.status}
                     invalid={data !== null && (data.accountInformation.status === undefined || data.accountInformation.status === null)}
                   >
                     <option value='Active'>Active</option>
@@ -234,7 +233,7 @@ const AccountTabContent = ({ data, setData }) => {
                     type='select'
                     name='userRoleId'
                     control={control}
-                    defaultValue={data.accountInformation.userRoleId ? data.accountInformation.userRoleId : "ADMIN"}
+                    defaultValue={(data.accountInformation.userRoleId === null || data.accountInformation.userRoleId === undefined) ? "ADMIN" : data.accountInformation.userRoleId}
                     invalid={data !== null && (data.accountInformation.userRoleId === undefined || data.accountInformation.userRoleId === null)}
                   >
                     <option value='ADMIN'>ADMIN</option>
@@ -259,7 +258,7 @@ const AccountTabContent = ({ data, setData }) => {
                     Birth Date
                   </Label>
                   <Controller
-                    defaultValue={data.accountInformation.dateofBirth ? data.accountInformation.dateofBirth : ""}
+                    defaultValue={(data.accountInformation.dateofBirth === null || data.accountInformation.dateofBirth === undefined) ? "" : data.accountInformation.dateofBirth}
                     name='dateofBirth'
                     as={Flatpickr}
                     control={control}
@@ -277,7 +276,7 @@ const AccountTabContent = ({ data, setData }) => {
                   <Label for='mobileNumber'>Mobile</Label>
 
                   <Controller
-                    defaultValue={data.accountInformation.mobileNumber ? data.accountInformation.mobileNumber : ""}
+                    defaultValue={(data.accountInformation.mobileNumber === null || data.accountInformation.mobileNumber === undefined) ? "" : data.accountInformation.mobileNumber}
                     control={control}
                     as={Input}
                     name='mobileNumber'
@@ -298,7 +297,7 @@ const AccountTabContent = ({ data, setData }) => {
                     type='text'
                     name='websiteURL'
                     placeholder='https://google.com'
-                    defaultValue={data.accountInformation.websiteURL ? data.accountInformation.websiteURL : ""}
+                    defaultValue={(data.accountInformation.websiteURL === null || data.accountInformation.websiteURL === undefined) ? "" : data.accountInformation.websiteURL}
                   />
                 </FormGroup>
               </Col>
@@ -310,7 +309,7 @@ const AccountTabContent = ({ data, setData }) => {
                     type='select'
                     name='primaryLanguage'
                     control={control}
-                    defaultValue={data.accountInformation.primaryLanguage ? data.accountInformation.primaryLanguage : "English"}
+                    defaultValue={(data.accountInformation.primaryLanguage === null || data.accountInformation.primaryLanguage === undefined) ? "English" : data.accountInformation.primaryLanguage}
                     
                   >
                     <option value='English'>English</option>
@@ -328,7 +327,7 @@ const AccountTabContent = ({ data, setData }) => {
                   <label className='d-block mb-1'>Gender</label>
                   <FormGroup>
                     <Controller
-                      defaultValue={data.accountInformation.gender ? data.accountInformation.gender : "Male"}
+                      defaultValue={(data.accountInformation.gender === null || data.accountInformation.gender === undefined) ? "Male" : data.accountInformation.gender}
                       name='gender'
                       control={control}
                       render={props => {
@@ -348,7 +347,7 @@ const AccountTabContent = ({ data, setData }) => {
                       }}
                     />
                     <Controller
-                     defaultValue={data.accountInformation.gender ? data.accountInformation.gender : "Female"}
+                     defaultValue={(data.accountInformation.gender === null || data.accountInformation.gender === undefined) ? "Female" : data.accountInformation.gender}
                       name='gender'
                       control={control}
                       render={props => {
@@ -411,7 +410,7 @@ const AccountTabContent = ({ data, setData }) => {
                 <FormGroup>
                   <Label for='identityNumber'>Identity ID</Label>
                   <Controller
-                    defaultValue={data.accountInformation.identityNumber ? data.accountInformation.identityNumber : ""}
+                    defaultValue={(data.accountInformation.identityNumber === null || data.accountInformation.identityNumber === undefined) ? "" : data.accountInformation.identityNumber}
                     control={control}
                     as={Input}
                     name='identityNumber'
@@ -426,7 +425,7 @@ const AccountTabContent = ({ data, setData }) => {
                     Expiry Date
                   </Label>
                   <Controller
-                    defaultValue={data.accountInformation.identityExpirydate ? data.accountInformation.identityExpirydate : ""}
+                    defaultValue={(data.accountInformation.identityExpirydate === null || data.accountInformation.identityExpirydate === undefined) ? "" : data.accountInformation.identityExpirydate}
                     id='identityExpirydate'
                     name='identityExpirydate'
                     as={Flatpickr}

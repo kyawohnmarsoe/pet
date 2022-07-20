@@ -57,7 +57,7 @@ const PayoutsTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='accountHolderName'>Account Holder Name</Label>
               <Controller
-                defaultValue={data.bankAccountInformation.accountHolderName ? data.bankAccountInformation.accountHolderName : ""}
+                defaultValue={(data.bankAccountInformation.accountHolderName === null || data.bankAccountInformation.accountHolderName === undefined) ? "" : data.bankAccountInformation.accountHolderName }
                 control={control}
                 as={Input}
                 name='accountHolderName'
@@ -73,7 +73,7 @@ const PayoutsTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='petzolaCommisionPercent'>Petzola Commision %</Label>
               <Controller
-                defaultValue={data.bankAccountInformation.petzolaCommisionPercent ? data.bankAccountInformation.petzolaCommisionPercent : ""}
+                defaultValue={(data.bankAccountInformation.petzolaCommisionPercent === null || data.bankAccountInformation.petzolaCommisionPercent === undefined) ? "" : data.bankAccountInformation.petzolaCommisionPercent }
                 control={control}
                 as={Input}
                 name='petzolaCommisionPercent'
@@ -88,14 +88,14 @@ const PayoutsTabContent = ({ data, setData }) => {
           <Col sm='6' md='4'>
             <FormGroup>
               <Label for='firstname'>Current Plan</Label>
-              <div className='row m-0'>{data.accountInformation.subscriptionPlanId ? data.accountInformation.subscriptionPlanId : ""} - {data.accountInformation.subscriptionPlanId ? data.accountInformation.subscriptionPlanId : ""} <span className='ml-auto'><a href="#"> Change</a></span></div>
+              <div className='row m-0'>{(data.accountInformation.subscriptionPlanId === null || data.accountInformation.subscriptionPlanId === undefined) ? "" : data.accountInformation.subscriptionPlanId } <span className='ml-auto'><a href="#"> Change</a></span></div>
             </FormGroup>
           </Col>
           <Col sm='6' md='4'>
             <FormGroup>
               <Label for='bankName'>Bank Name</Label>
               <Controller
-                defaultValue={data.bankAccountInformation.bankName ? data.bankAccountInformation.bankName : ""}
+                defaultValue={(data.bankAccountInformation.bankName === null || data.bankAccountInformation.bankName === undefined) ? "" : data.bankAccountInformation.bankName }
                 control={control}
                 as={Input}
                 id='bankName'
@@ -112,7 +112,7 @@ const PayoutsTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='iBAN'>IBAN</Label>
               <Controller
-                defaultValue={data.bankAccountInformation.iBAN ? data.bankAccountInformation.iBAN : "" }
+                defaultValue={(data.bankAccountInformation.iBAN === null || data.bankAccountInformation.iBAN === undefined) ? "" : data.bankAccountInformation.iBAN  }
                 control={control}
                 as={Input}
                 id='iBAN'
@@ -129,7 +129,7 @@ const PayoutsTabContent = ({ data, setData }) => {
             <FormGroup>
               <Label for='petzolaCommisionPercent'>Petzola Commision %</Label>
               <Controller
-                defaultValue={data.bankAccountInformation.petzolaCommisionPercent ? data.bankAccountInformation.petzolaCommisionPercent : ""}
+                defaultValue={(data.bankAccountInformation.petzolaCommisionPercent === null || data.bankAccountInformation.petzolaCommisionPercent === undefined) ? "" : data.bankAccountInformation.petzolaCommisionPercent }
                 control={control}
                 as={Input}
                 name='petzolaCommisionPercent'
