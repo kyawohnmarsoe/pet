@@ -17,6 +17,18 @@ export default [
     navLink: '/clinic/list'
   },
   {
+    id: 'opertors',
+    title: 'operators',
+    icon: <Grid size={20} />,
+    navLink: '/operator/list'
+  },
+  {
+    id: 'serviceOffers',
+    title: 'Service Offers',
+    icon: <Grid size={20} />,
+    navLink: '/service-offer/list'
+  },
+  {
     id: 'chat',
     title: 'Chat',
     icon: <MessageSquare size={20} />,

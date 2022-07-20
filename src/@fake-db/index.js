@@ -20,5 +20,7 @@ import './cards/card-statistics'
 import './jwt'
 import './clinics/clinicsList'
 import './pages/customer'
+import './operators/operatorsList'
+import './service/offerList'
 
 mock.onAny().passThrough()
